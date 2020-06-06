@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.formice.mars.web.dao.ToolDao">
+  <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.Tool">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="cate" jdbcType="TINYINT" property="cate" />
+    <result column="container_type" jdbcType="TINYINT" property="containerType" />
+    <result column="container_addr" jdbcType="VARCHAR" property="containerAddr" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="help" jdbcType="VARCHAR" property="help" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, cate, container_type, container_addr, website, help, create_time,
+    create_by, update_time, update_by, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tool
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tool
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.formice.mars.web.model.entity.Tool">
+    insert into tool (id, name, type,
+      cate, container_type, container_addr,
+      website, help, create_time,
+      create_by, update_time, update_by,
+      is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+      #{cate,jdbcType=TINYINT}, #{containerType,jdbcType=TINYINT}, #{containerAddr,jdbcType=VARCHAR},
+      #{website,jdbcType=VARCHAR}, #{help,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT},
+      #{isDeleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.formice.mars.web.model.entity.Tool" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into tool
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="cate != null">
+        cate,
+      </if>
+      <if test="containerType != null">
+        container_type,
+      </if>
+      <if test="containerAddr != null">
+        container_addr,
+      </if>
+      <if test="website != null">
+        website,
+      </if>
+      <if test="help != null">
+        help,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="cate != null">
+        #{cate,jdbcType=TINYINT},
+      </if>
+      <if test="containerType != null">
+        #{containerType,jdbcType=TINYINT},
+      </if>
+      <if test="containerAddr != null">
+        #{containerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="help != null">
+        #{help,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.formice.mars.web.model.entity.Tool">
+    update tool
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="cate != null">
+        cate = #{cate,jdbcType=TINYINT},
+      </if>
+      <if test="containerType != null">
+        container_type = #{containerType,jdbcType=TINYINT},
+      </if>
+      <if test="containerAddr != null">
+        container_addr = #{containerAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null">
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="help != null">
+        help = #{help,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.formice.mars.web.model.entity.Tool">
+    update tool
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      cate = #{cate,jdbcType=TINYINT},
+      container_type = #{containerType,jdbcType=TINYINT},
+      container_addr = #{containerAddr,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      help = #{help,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryEntityWithPage" parameterType="com.formice.mars.web.model.dto.ToolPageDto" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tool
+    where 1=1
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="type != null">
+      and type = #{type}
+    </if>
+    order by create_time desc
+    limit #{pageNum} , #{pageSize}
+  </select>
+
+  <select id="queryEntityWithPageCount" parameterType="com.formice.mars.web.model.dto.ToolPageDto" resultType="java.lang.Integer">
+    select
+    count(1)
+    from tool
+    where 1=1
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="type != null">
+      and type = #{type,jdbcType=TINYINT}
+    </if>
+
+  </select>
+
+  <select id="queryList" parameterType="com.formice.mars.web.model.dto.ToolDto" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tool
+    where is_deleted = 0
+    <if test="type != null">
+      and type = #{type}
+    </if>
+    <if test="cate != null">
+      and cate = #{cate}
+    </if>
+    order by create_time desc
+  </select>
+
+</mapper>

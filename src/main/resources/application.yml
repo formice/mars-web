@@ -1,0 +1,38 @@
+server:
+  port: 8080     # Springboot占用端口（生产环境）
+
+spring:
+  datasource:
+    #druid:
+      name: ds_mars_base
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #driver-class-name: com.mysql.jdbc.Driver
+      url : jdbc:mysql://117.48.227.127:3306/mars_base?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+      username : root
+      password : 123456
+      # druid 连接池
+      type : com.alibaba.druid.pool.DruidDataSource
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+mybatis:
+  mapper-locations: classpath:sqlmap/*.xml
+  type-aliases-package: com.formice.mars.web.model.entity
+
+logging:
+  level:
+    root: info
+
+    #com.bestvike: debug
+    #org.springframework.security: warn

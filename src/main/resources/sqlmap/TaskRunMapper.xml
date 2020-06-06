@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.formice.mars.web.dao.TaskRunDao" >
+  <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.TaskRun" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="task_id" property="taskId" jdbcType="BIGINT" />
+    <result column="flow_id" property="flowId" jdbcType="BIGINT" />
+    <result column="tool_id" property="toolId" jdbcType="BIGINT" />
+    <result column="busi_type" property="busiType" jdbcType="TINYINT" />
+    <result column="busi_id" property="busiId" jdbcType="BIGINT" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_id, flow_id, tool_id, busi_type, busi_id, value, create_time, create_by, 
+    update_time, update_by, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from task_run
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from task_run
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.formice.mars.web.model.entity.TaskRun" >
+    insert into task_run (id, task_id, flow_id, 
+      tool_id, busi_type, busi_id, 
+      value, create_time, create_by, 
+      update_time, update_by, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, 
+      #{toolId,jdbcType=BIGINT}, #{busiType,jdbcType=TINYINT}, #{busiId,jdbcType=BIGINT}, 
+      #{value,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.formice.mars.web.model.entity.TaskRun" >
+    insert into task_run
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="flowId != null" >
+        flow_id,
+      </if>
+      <if test="toolId != null" >
+        tool_id,
+      </if>
+      <if test="busiType != null" >
+        busi_type,
+      </if>
+      <if test="busiId != null" >
+        busi_id,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="flowId != null" >
+        #{flowId,jdbcType=BIGINT},
+      </if>
+      <if test="toolId != null" >
+        #{toolId,jdbcType=BIGINT},
+      </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=TINYINT},
+      </if>
+      <if test="busiId != null" >
+        #{busiId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.formice.mars.web.model.entity.TaskRun" >
+    update task_run
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=BIGINT},
+      </if>
+      <if test="flowId != null" >
+        flow_id = #{flowId,jdbcType=BIGINT},
+      </if>
+      <if test="toolId != null" >
+        tool_id = #{toolId,jdbcType=BIGINT},
+      </if>
+      <if test="busiType != null" >
+        busi_type = #{busiType,jdbcType=TINYINT},
+      </if>
+      <if test="busiId != null" >
+        busi_id = #{busiId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.formice.mars.web.model.entity.TaskRun" >
+    update task_run
+    set task_id = #{taskId,jdbcType=BIGINT},
+      flow_id = #{flowId,jdbcType=BIGINT},
+      tool_id = #{toolId,jdbcType=BIGINT},
+      busi_type = #{busiType,jdbcType=TINYINT},
+      busi_id = #{busiId,jdbcType=BIGINT},
+      value = #{value,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryEntity" parameterType="com.formice.mars.web.model.entity.TaskRun" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from task_run
+    where 1=1
+    <if test="taskId != null">
+      and task_id = #{taskId}
+    </if>
+    <if test="flowId != null">
+      and flow_id = #{flowId}
+    </if>
+    <if test="toolId != null">
+      and tool_id = #{toolId}
+    </if>
+    <if test="busiType != null">
+      and busi_type = #{busiType}
+    </if>
+    <if test="busiId != null">
+      and busi_id = #{busiId}
+    </if>
+  </select>
+</mapper>

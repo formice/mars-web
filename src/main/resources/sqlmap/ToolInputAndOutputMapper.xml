@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.formice.mars.web.dao.ToolInputAndOutputDao">
+  <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.ToolInputAndOutput">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="tool_id" jdbcType="BIGINT" property="toolId" />
+    <result column="cate" jdbcType="TINYINT" property="cate" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="min_num" jdbcType="TINYINT" property="minNum" />
+    <result column="max_num" jdbcType="TINYINT" property="maxNum" />
+    <result column="file_format" jdbcType="TINYINT" property="fileFormat" />
+    <result column="file_split_symbol" jdbcType="TINYINT" property="fileSplitSymbol" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="prefix" jdbcType="VARCHAR" property="prefix" />
+    <result column="prefix_split_symbol" jdbcType="TINYINT" property="prefixSplitSymbol" />
+    <result column="is_must" jdbcType="TINYINT" property="isMust" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, tool_id, cate, type, min_num, max_num, file_format, file_split_symbol, 
+    `desc`, prefix, prefix_split_symbol, is_must, create_time, create_by, update_time,
+    update_by, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tool_input_and_output
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tool_input_and_output
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.formice.mars.web.model.entity.ToolInputAndOutput">
+    insert into tool_input_and_output (id, name, tool_id, 
+      cate, type, min_num, 
+      max_num, file_format, file_split_symbol, 
+      desc, prefix, prefix_split_symbol, 
+      is_must, create_time, create_by, 
+      update_time, update_by, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{toolId,jdbcType=BIGINT}, 
+      #{cate,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{minNum,jdbcType=TINYINT}, 
+      #{maxNum,jdbcType=TINYINT}, #{fileFormat,jdbcType=TINYINT}, #{fileSplitSymbol,jdbcType=TINYINT}, 
+      #{desc,jdbcType=VARCHAR}, #{prefix,jdbcType=VARCHAR}, #{prefixSplitSymbol,jdbcType=TINYINT}, 
+      #{isMust,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.formice.mars.web.model.entity.ToolInputAndOutput">
+    insert into tool_input_and_output
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="toolId != null">
+        tool_id,
+      </if>
+      <if test="cate != null">
+        cate,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="minNum != null">
+        min_num,
+      </if>
+      <if test="maxNum != null">
+        max_num,
+      </if>
+      <if test="fileFormat != null">
+        file_format,
+      </if>
+      <if test="fileSplitSymbol != null">
+        file_split_symbol,
+      </if>
+      <if test="desc != null">
+        `desc`,
+      </if>
+      <if test="prefix != null">
+        prefix,
+      </if>
+      <if test="prefixSplitSymbol != null">
+        prefix_split_symbol,
+      </if>
+      <if test="isMust != null">
+        is_must,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="toolId != null">
+        #{toolId,jdbcType=BIGINT},
+      </if>
+      <if test="cate != null">
+        #{cate,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="minNum != null">
+        #{minNum,jdbcType=TINYINT},
+      </if>
+      <if test="maxNum != null">
+        #{maxNum,jdbcType=TINYINT},
+      </if>
+      <if test="fileFormat != null">
+        #{fileFormat,jdbcType=TINYINT},
+      </if>
+      <if test="fileSplitSymbol != null">
+        #{fileSplitSymbol,jdbcType=TINYINT},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="prefix != null">
+        #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="prefixSplitSymbol != null">
+        #{prefixSplitSymbol,jdbcType=TINYINT},
+      </if>
+      <if test="isMust != null">
+        #{isMust,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.formice.mars.web.model.entity.ToolInputAndOutput">
+    update tool_input_and_output
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="toolId != null">
+        tool_id = #{toolId,jdbcType=BIGINT},
+      </if>
+      <if test="cate != null">
+        cate = #{cate,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="minNum != null">
+        min_num = #{minNum,jdbcType=TINYINT},
+      </if>
+      <if test="maxNum != null">
+        max_num = #{maxNum,jdbcType=TINYINT},
+      </if>
+      <if test="fileFormat != null">
+        file_format = #{fileFormat,jdbcType=TINYINT},
+      </if>
+      <if test="fileSplitSymbol != null">
+        file_split_symbol = #{fileSplitSymbol,jdbcType=TINYINT},
+      </if>
+      <if test="desc != null">
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="prefix != null">
+        prefix = #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="prefixSplitSymbol != null">
+        prefix_split_symbol = #{prefixSplitSymbol,jdbcType=TINYINT},
+      </if>
+      <if test="isMust != null">
+        is_must = #{isMust,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.formice.mars.web.model.entity.ToolInputAndOutput">
+    update tool_input_and_output
+    set name = #{name,jdbcType=VARCHAR},
+      tool_id = #{toolId,jdbcType=BIGINT},
+      cate = #{cate,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      min_num = #{minNum,jdbcType=TINYINT},
+      max_num = #{maxNum,jdbcType=TINYINT},
+      file_format = #{fileFormat,jdbcType=TINYINT},
+      file_split_symbol = #{fileSplitSymbol,jdbcType=TINYINT},
+      desc = #{desc,jdbcType=VARCHAR},
+      prefix = #{prefix,jdbcType=VARCHAR},
+      prefix_split_symbol = #{prefixSplitSymbol,jdbcType=TINYINT},
+      is_must = #{isMust,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=BIGINT},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryEntityWithPage" parameterType="com.formice.mars.web.model.dto.ToolInputAndOutputPageDto" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tool_input_and_output
+    where tool_id = #{toolId}
+    <if test="cate != null">
+      and cate = #{cate}
+    </if>
+    limit #{pageNum} , #{pageSize}
+  </select>
+
+  <select id="queryEntityWithPageCount" parameterType="com.formice.mars.web.model.dto.ToolInputAndOutputPageDto" resultType="java.lang.Integer">
+    select
+    count(1)
+    from tool_input_and_output
+    where tool_id = #{toolId}
+    <if test="cate != null">
+      and cate = #{cate}
+    </if>
+  </select>
+
+  <select id="queryList" parameterType="com.formice.mars.web.model.entity.ToolInputAndOutput" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tool_input_and_output
+    where 1=1
+    <if test="toolId != null">
+      and tool_id = #{toolId}
+    </if>
+    <if test="cate != null">
+      and cate = #{cate}
+    </if>
+  </select>
+
+</mapper>

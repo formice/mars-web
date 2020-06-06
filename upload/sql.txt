@@ -1,0 +1,363 @@
+select * from  (select
+      distinct 
+      order_date,
+      COALESCE(merchant_e_city_id,0) merchant_e_city_id,
+      COALESCE(carrier_driver_id,0) carrier_driver_id,
+      COALESCE(carrier_driver_name,'0') carrier_driver_name,
+      COALESCE(station_id,0) station_id,
+      COALESCE(station_name,'0') station_name,
+      COALESCE(grid_id,0) grid_id,
+      COALESCE(grid_name,'0') grid_name,
+      COALESCE(carrier_id,0) carrier_id,
+      COALESCE(product_id,0) product_id,
+      COALESCE(retailer_id,0) retailer_id,
+      COALESCE(period_time,0) period_time,
+      COALESCE(agent_id,0) agent_id,
+      COALESCE(source_id,0) source_id,
+      COALESCE(is_book,0) is_book,
+      COALESCE(merchant_customer_walk_distance,0) merchant_customer_walk_distance,
+      COALESCE(weather_type,'0') weather_type,
+      system_accept_order_count,
+      push_order_count_55465,
+      exception_cancel_order_count,
+      not_valid_complete_order_count,
+      not_valid_order_count,
+      valid_complete_order_count,
+      delivery_time,
+      overtime_order_count,
+      overtime_60_order_count,
+      good_rating_order_time_count,
+      bad_rating_order_time_count,
+      all_rating_order_time_count,
+      refuse_order_count,
+      bad_quality_order_count,
+      complaint_count,
+      carrier_driver_accept_order_count,
+      total_delivery_time,
+      over15min_exception_cancel_shop_order_count,
+      over15min_exception_cancel_user_order_count,
+      carrier_exception_cancel_order_count_55478,
+      app_complain_count,
+      napose_complain_count,
+      refuse_order_count_55485,
+      dispatch_overtime_count,
+      establish_bad_rating_time_count,
+      bad_rating_time_count,
+      good_rating_time_count,
+      rating_time_count,
+      establish_retailer_bad_rating_time_count,
+      push_order_count_55466,
+      COALESCE(consumer_e_city_id,0) consumer_e_city_id,
+      complete_order_count,
+      active_carrier_driver_count,
+      merchant_interrupt_delivery_error_order_count,
+      merchant_food_error_order_count,
+      merchant_call_late_error_order_count,
+      user_not_answer_error_order_count,
+      user_return_order_error_order_count,
+      user_address_error_order_count,
+      delivery_out_of_service_order_count,
+      carrier_remark_exception_error_order_count,
+      other_error_order_count,
+      carrier_cancel_order_count,
+      sys_excp_delivery_timeout_order_count,
+      customer_feedback_wrong_food_order_count,
+      customer_feedback_delivery_timeout_order_count,
+      customer_feedback_defamation_platform_order_count,
+      customer_feedback_false_delivery_order_count,
+      customer_feedback_advance_click_delivery_order_count,
+      customer_feedback_extra_charge_order_count,
+      customer_feedback_bad_service_attitude_order_count,
+      customer_feedback_food_damaged_order_count,
+      customer_feedback_no_delivery_order_count,
+      customer_feedback_other_order_count,
+      merchant_feedback_pick_up_timeout_order_count,
+      merchant_feedback_false_abnormality_order_count,
+      merchant_feedback_inducement_customer_refund_order_count,
+      merchant_feedback_delivery_timeout_order_count,
+      merchant_feedback_no_delivery_order_count,
+      merchant_feedback_food_damaged_order_count,
+      merchant_feedback_bad_service_attitude_order_count,
+      merchant_feedback_extra_charge_order_count,
+      merchant_feedback_advance_click_delivery_order_count,
+      merchant_feedback_false_delivery_order_count,
+      merchant_feedback_defamation_platform_or_merchant_order_count,
+      merchant_feedback_other_order_count,
+      customer_bad_evaluate_advance_click_delivery_order_count,
+      customer_bad_evaluate_no_food_order_count,
+      customer_bad_evaluate_bad_service_attitude_order_count,
+      customer_bad_evaluate_extra_charge_order_count,
+      customer_bad_evaluate_wrong_food_order_count,
+      customer_bad_evaluate_food_damaged_order_count,
+      customer_bad_evaluate_delivery_timeout_order_count,
+      customer_bad_evaluate_not_wear_uniform_order_count,
+      customer_bad_evaluate_cold_food_order_count,
+      customer_bad_evaluate_with_incubator_order_count,
+      customer_bad_evaluate_dirty_clothes_order_count,
+      customer_bad_evaluate_not_go_upstairs_order_count,
+      merchant_bad_evaluate_pick_up_time_long_order_count,
+      merchant_bad_evaluate_slow_deliver_order_count,
+      merchant_bad_evaluate_cannnot_call_order_count,
+      merchant_bad_evaluate_bad_service_attitude_order_count,
+      merchant_bad_evaluate_not_food_order_count,
+      merchant_bad_evaluate_advance_click_delivery_order_count,
+      merchant_bad_evaluate_food_damaged_order_count,
+      merchant_bad_evaluate_inducement_customer_refund_order_count,
+      merchant_bad_evaluate_not_wear_uniform_order_count,
+      merchant_bad_evaluate_unclean_image_order_count,
+      over_business_time_reject_order_count,
+      over_pressure_reject_order_count,
+      grid_no_carrier_reject_order_count,
+      no_carrier_driver_reject_order_count,
+      complain_order_count_55534,
+      COALESCE(city_name,'0') city_name,
+      complain_order_count_55537,
+      exception_cancel_order_count_61809
+    from
+      dw_lpd.dw_lpd_dm_tms_apollo_onedata_wide_daily
+    where
+      dt = '2018-06-12'
+      and order_date='2018-06-01' ) t
+
+
+
+      where not exists (
+
+      select * from (
+                  select
+      distinct 
+      order_date,
+      COALESCE(merchant_e_city_id,0) merchant_e_city_id,
+      COALESCE(carrier_driver_id,0) carrier_driver_id,
+      COALESCE(carrier_driver_name,'0') carrier_driver_name,
+      COALESCE(station_id,0) station_id,
+      COALESCE(station_name,'0') station_name,
+      COALESCE(grid_id,0) grid_id,
+      COALESCE(grid_name,'0') grid_name,
+      COALESCE(carrier_id,0) carrier_id,
+      COALESCE(product_id,0) product_id,
+      COALESCE(retailer_id,0) retailer_id,
+      COALESCE(period_time,0) period_time,
+      COALESCE(agent_id,0) agent_id,
+      COALESCE(source_id,0) source_id,
+      COALESCE(is_book,0) is_book,
+      COALESCE(merchant_customer_walk_distance,0) merchant_customer_walk_distance,
+      COALESCE(weather_type,'0') weather_type,
+      system_accept_order_count,
+      push_order_count_55465,
+      exception_cancel_order_count,
+      not_valid_complete_order_count,
+      not_valid_order_count,
+      valid_complete_order_count,
+      delivery_time,
+      overtime_order_count,
+      overtime_60_order_count,
+      good_rating_order_time_count,
+      bad_rating_order_time_count,
+      all_rating_order_time_count,
+      refuse_order_count,
+      bad_quality_order_count,
+      complaint_count,
+      carrier_driver_accept_order_count,
+      total_delivery_time,
+      over15min_exception_cancel_shop_order_count,
+      over15min_exception_cancel_user_order_count,
+      carrier_exception_cancel_order_count_55478,
+      app_complain_count,
+      napose_complain_count,
+      refuse_order_count_55485,
+      dispatch_overtime_count,
+      establish_bad_rating_time_count,
+      bad_rating_time_count,
+      good_rating_time_count,
+      rating_time_count,
+      establish_retailer_bad_rating_time_count,
+      push_order_count_55466,
+      COALESCE(consumer_e_city_id,0) consumer_e_city_id,
+      complete_order_count,
+      active_carrier_driver_count,
+      merchant_interrupt_delivery_error_order_count,
+      merchant_food_error_order_count,
+      merchant_call_late_error_order_count,
+      user_not_answer_error_order_count,
+      user_return_order_error_order_count,
+      user_address_error_order_count,
+      delivery_out_of_service_order_count,
+      carrier_remark_exception_error_order_count,
+      other_error_order_count,
+      carrier_cancel_order_count,
+      sys_excp_delivery_timeout_order_count,
+      customer_feedback_wrong_food_order_count,
+      customer_feedback_delivery_timeout_order_count,
+      customer_feedback_defamation_platform_order_count,
+      customer_feedback_false_delivery_order_count,
+      customer_feedback_advance_click_delivery_order_count,
+      customer_feedback_extra_charge_order_count,
+      customer_feedback_bad_service_attitude_order_count,
+      customer_feedback_food_damaged_order_count,
+      customer_feedback_no_delivery_order_count,
+      customer_feedback_other_order_count,
+      merchant_feedback_pick_up_timeout_order_count,
+      merchant_feedback_false_abnormality_order_count,
+      merchant_feedback_inducement_customer_refund_order_count,
+      merchant_feedback_delivery_timeout_order_count,
+      merchant_feedback_no_delivery_order_count,
+      merchant_feedback_food_damaged_order_count,
+      merchant_feedback_bad_service_attitude_order_count,
+      merchant_feedback_extra_charge_order_count,
+      merchant_feedback_advance_click_delivery_order_count,
+      merchant_feedback_false_delivery_order_count,
+      merchant_feedback_defamation_platform_or_merchant_order_count,
+      merchant_feedback_other_order_count,
+      customer_bad_evaluate_advance_click_delivery_order_count,
+      customer_bad_evaluate_no_food_order_count,
+      customer_bad_evaluate_bad_service_attitude_order_count,
+      customer_bad_evaluate_extra_charge_order_count,
+      customer_bad_evaluate_wrong_food_order_count,
+      customer_bad_evaluate_food_damaged_order_count,
+      customer_bad_evaluate_delivery_timeout_order_count,
+      customer_bad_evaluate_not_wear_uniform_order_count,
+      customer_bad_evaluate_cold_food_order_count,
+      customer_bad_evaluate_with_incubator_order_count,
+      customer_bad_evaluate_dirty_clothes_order_count,
+      customer_bad_evaluate_not_go_upstairs_order_count,
+      merchant_bad_evaluate_pick_up_time_long_order_count,
+      merchant_bad_evaluate_slow_deliver_order_count,
+      merchant_bad_evaluate_cannnot_call_order_count,
+      merchant_bad_evaluate_bad_service_attitude_order_count,
+      merchant_bad_evaluate_not_food_order_count,
+      merchant_bad_evaluate_advance_click_delivery_order_count,
+      merchant_bad_evaluate_food_damaged_order_count,
+      merchant_bad_evaluate_inducement_customer_refund_order_count,
+      merchant_bad_evaluate_not_wear_uniform_order_count,
+      merchant_bad_evaluate_unclean_image_order_count,
+      over_business_time_reject_order_count,
+      over_pressure_reject_order_count,
+      grid_no_carrier_reject_order_count,
+      no_carrier_driver_reject_order_count,
+      complain_order_count_55534,
+      COALESCE(city_name,'0') city_name,
+      complain_order_count_55537,
+      exception_cancel_order_count_61809
+    from
+      dw_lpd.dw_lpd_test_dm_tms_apollo_onedata_wide_daily
+    where
+      dt = '2018-06-12'
+      and order_date='2018-06-01' ) t1
+     where 
+      t.order_date = t1.order_date
+  and t.merchant_e_city_id = t1.merchant_e_city_id
+  and t.carrier_driver_id = t1.carrier_driver_id
+  and t.carrier_driver_name=t1.carrier_driver_name
+  and t.station_id = t1.station_id 
+  and t.station_name=t1.station_name
+  and t.grid_id = t1.grid_id 
+  and t.grid_name=t1.grid_name
+  and t.carrier_id = t1.carrier_id
+  and t.product_id = t1.product_id
+  and t.retailer_id = t1.retailer_id
+  and t.period_time = t1.period_time
+  and t.agent_id = t1.agent_id
+  and t.source_id = t1.source_id
+  and t.is_book = t1.is_book
+  and t.merchant_customer_walk_distance = t1.merchant_customer_walk_distance
+  and t.weather_type = t1.weather_type
+  and t.system_accept_order_count = t1.system_accept_order_count
+  and t.push_order_count_55465 = t1.push_order_count_55465
+  and t.exception_cancel_order_count = t1.exception_cancel_order_count
+  and t.not_valid_complete_order_count = t1.not_valid_complete_order_count
+  and t.not_valid_order_count = t1.not_valid_order_count
+  and t.valid_complete_order_count = t1.valid_complete_order_count
+  and t.delivery_time = t1.delivery_time
+  and t.overtime_order_count = t1.overtime_order_count
+  and t.overtime_60_order_count = t1.overtime_60_order_count
+  and t.good_rating_order_time_count = t1.good_rating_order_time_count
+  and t.bad_rating_order_time_count = t1.bad_rating_order_time_count
+  and t.all_rating_order_time_count = t1.all_rating_order_time_count
+  and t.refuse_order_count = t1.refuse_order_count
+  and t.bad_quality_order_count = t1.bad_quality_order_count
+  and t.complaint_count = t1.complaint_count
+  and t.carrier_driver_accept_order_count = t1.carrier_driver_accept_order_count
+  and t.total_delivery_time = t1.total_delivery_time
+  and t.over15min_exception_cancel_shop_order_count = t1.over15min_exception_cancel_shop_order_count
+  and t.over15min_exception_cancel_user_order_count = t1.over15min_exception_cancel_user_order_count
+  and t.carrier_exception_cancel_order_count_55478 = t1.carrier_exception_cancel_order_count_55478
+  and t.app_complain_count = t1.app_complain_count
+  and t.napose_complain_count = t1.napose_complain_count
+  and t.refuse_order_count_55485 = t1.refuse_order_count_55485
+  and t.dispatch_overtime_count = t1.dispatch_overtime_count
+  and t.establish_bad_rating_time_count = t1.establish_bad_rating_time_count
+  and t.bad_rating_time_count = t1.bad_rating_time_count
+  and t.good_rating_time_count = t1.good_rating_time_count
+  and t.rating_time_count = t1.rating_time_count
+  and t.establish_retailer_bad_rating_time_count = t1.establish_retailer_bad_rating_time_count
+  and t.push_order_count_55466 = t1.push_order_count_55466
+  and t.consumer_e_city_id = t1.consumer_e_city_id
+  and t.complete_order_count = t1.complete_order_count
+  and t.active_carrier_driver_count = t1.active_carrier_driver_count
+  and t.merchant_interrupt_delivery_error_order_count = t1.merchant_interrupt_delivery_error_order_count
+  and t.merchant_food_error_order_count = t1.merchant_food_error_order_count
+  and t.merchant_call_late_error_order_count = t1.merchant_call_late_error_order_count
+  and t.user_not_answer_error_order_count = t1.user_not_answer_error_order_count
+  and t.user_return_order_error_order_count = t1.user_return_order_error_order_count
+  and t.user_address_error_order_count = t1.user_address_error_order_count
+  and t.delivery_out_of_service_order_count = t1.delivery_out_of_service_order_count
+  and t.carrier_remark_exception_error_order_count = t1.carrier_remark_exception_error_order_count
+  and t.other_error_order_count = t1.other_error_order_count
+  and t.carrier_cancel_order_count = t1.carrier_cancel_order_count
+  and t.sys_excp_delivery_timeout_order_count = t1.sys_excp_delivery_timeout_order_count
+  and t.customer_feedback_wrong_food_order_count = t1.customer_feedback_wrong_food_order_count
+  and t.customer_feedback_delivery_timeout_order_count = t1.customer_feedback_delivery_timeout_order_count
+  and t.customer_feedback_defamation_platform_order_count = t1.customer_feedback_defamation_platform_order_count
+  and t.customer_feedback_false_delivery_order_count = t1.customer_feedback_false_delivery_order_count
+  and t.customer_feedback_advance_click_delivery_order_count = t1.customer_feedback_advance_click_delivery_order_count
+  and t.customer_feedback_extra_charge_order_count = t1.customer_feedback_extra_charge_order_count
+  and t.customer_feedback_bad_service_attitude_order_count = t1.customer_feedback_bad_service_attitude_order_count
+  and t.customer_feedback_food_damaged_order_count = t1.customer_feedback_food_damaged_order_count
+  and t.customer_feedback_no_delivery_order_count = t1.customer_feedback_no_delivery_order_count
+  and t.customer_feedback_other_order_count = t1.customer_feedback_other_order_count
+  and t.merchant_feedback_pick_up_timeout_order_count = t1.merchant_feedback_pick_up_timeout_order_count
+  and t.merchant_feedback_false_abnormality_order_count = t1.merchant_feedback_false_abnormality_order_count
+  and t.merchant_feedback_inducement_customer_refund_order_count = t1.merchant_feedback_inducement_customer_refund_order_count
+  and t.merchant_feedback_delivery_timeout_order_count = t1.merchant_feedback_delivery_timeout_order_count
+  and t.merchant_feedback_no_delivery_order_count = t1.merchant_feedback_no_delivery_order_count
+  and t.merchant_feedback_food_damaged_order_count = t1.merchant_feedback_food_damaged_order_count
+  and t.merchant_feedback_bad_service_attitude_order_count = t1.merchant_feedback_bad_service_attitude_order_count
+  and t.merchant_feedback_extra_charge_order_count = t1.merchant_feedback_extra_charge_order_count
+  and t.merchant_feedback_advance_click_delivery_order_count = t1.merchant_feedback_advance_click_delivery_order_count
+  and t.merchant_feedback_false_delivery_order_count = t1.merchant_feedback_false_delivery_order_count
+  and t.merchant_feedback_defamation_platform_or_merchant_order_count = t1.merchant_feedback_defamation_platform_or_merchant_order_count
+  and t.merchant_feedback_other_order_count = t1.merchant_feedback_other_order_count
+  and t.customer_bad_evaluate_advance_click_delivery_order_count = t1.customer_bad_evaluate_advance_click_delivery_order_count
+  and t.customer_bad_evaluate_no_food_order_count = t1.customer_bad_evaluate_no_food_order_count
+  and t.customer_bad_evaluate_bad_service_attitude_order_count = t1.customer_bad_evaluate_bad_service_attitude_order_count
+  and t.customer_bad_evaluate_extra_charge_order_count = t1.customer_bad_evaluate_extra_charge_order_count
+  and t.customer_bad_evaluate_wrong_food_order_count = t1.customer_bad_evaluate_wrong_food_order_count
+  and t.customer_bad_evaluate_food_damaged_order_count = t1.customer_bad_evaluate_food_damaged_order_count
+  and t.customer_bad_evaluate_delivery_timeout_order_count = t1.customer_bad_evaluate_delivery_timeout_order_count
+  and t.customer_bad_evaluate_not_wear_uniform_order_count = t1.customer_bad_evaluate_not_wear_uniform_order_count
+  and t.customer_bad_evaluate_cold_food_order_count = t1.customer_bad_evaluate_cold_food_order_count
+  and t.customer_bad_evaluate_with_incubator_order_count = t1.customer_bad_evaluate_with_incubator_order_count
+  and t.customer_bad_evaluate_dirty_clothes_order_count = t1.customer_bad_evaluate_dirty_clothes_order_count
+  and t.customer_bad_evaluate_not_go_upstairs_order_count = t1.customer_bad_evaluate_not_go_upstairs_order_count
+  and t.merchant_bad_evaluate_pick_up_time_long_order_count = t1.merchant_bad_evaluate_pick_up_time_long_order_count
+  and t.merchant_bad_evaluate_slow_deliver_order_count = t1.merchant_bad_evaluate_slow_deliver_order_count
+  and t.merchant_bad_evaluate_cannnot_call_order_count = t1.merchant_bad_evaluate_cannnot_call_order_count
+  and t.merchant_bad_evaluate_bad_service_attitude_order_count = t1.merchant_bad_evaluate_bad_service_attitude_order_count
+  and t.merchant_bad_evaluate_not_food_order_count = t1.merchant_bad_evaluate_not_food_order_count
+  and t.merchant_bad_evaluate_advance_click_delivery_order_count = t1.merchant_bad_evaluate_advance_click_delivery_order_count
+  and t.merchant_bad_evaluate_food_damaged_order_count = t1.merchant_bad_evaluate_food_damaged_order_count
+  and t.merchant_bad_evaluate_inducement_customer_refund_order_count = t1.merchant_bad_evaluate_inducement_customer_refund_order_count
+  and t.merchant_bad_evaluate_not_wear_uniform_order_count = t1.merchant_bad_evaluate_not_wear_uniform_order_count
+  and t.merchant_bad_evaluate_unclean_image_order_count = t1.merchant_bad_evaluate_unclean_image_order_count
+  and t.over_business_time_reject_order_count = t1.over_business_time_reject_order_count
+  and t.over_pressure_reject_order_count = t1.over_pressure_reject_order_count
+  and t.grid_no_carrier_reject_order_count = t1.grid_no_carrier_reject_order_count
+  and t.no_carrier_driver_reject_order_count = t1.no_carrier_driver_reject_order_count
+  and t.complain_order_count_55534 = t1.complain_order_count_55534
+  and t.city_name = t1.city_name
+  and t.complain_order_count_55537 = t1.complain_order_count_55537
+  and t.exception_cancel_order_count_61809 = t1.exception_cancel_order_count_61809
+
+
+      )
