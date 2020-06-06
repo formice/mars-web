@@ -85,7 +85,7 @@
 	</dependencies>
 
 
-	 <repositories>
+	 <!--<repositories>
 		<repository>
 			<id>maven-ali</id>
 			<url>http://maven.aliyun.com/nexus/content/groups/public//</url>
@@ -98,7 +98,7 @@
 				<checksumPolicy>fail</checksumPolicy>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories>-->
 
 	<build>
 		<plugins>
