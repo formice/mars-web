@@ -48,6 +48,7 @@ public class ToolController {
     public Response addToolParameter(ToolTemplate toolTemplate){
         System.out.println(toolTemplate);
         toolService.addToolTemplate(toolTemplate);
+
         return Response.createBySuccess();
     }
 
