@@ -11,6 +11,7 @@ import com.formice.mars.web.model.dto.ToolParameterPageDto;
 import com.formice.mars.web.model.entity.*;
 import com.formice.mars.web.model.vo.InputAndOutputVo;
 import com.formice.mars.web.model.vo.ToolPageListVo;
+import com.formice.mars.web.model.vo.ToolParameterVo;
 import com.formice.mars.web.tool.DateUtil;
 import com.google.common.collect.Lists;
 import org.beetl.core.Configuration;
@@ -101,7 +102,23 @@ public class ToolService {
     public PageResponse getParameterPageList(ToolParameterPageDto toolParameterPageDto){
         List<ToolParameter> data = toolParameterDao.queryEntityWithPage(toolParameterPageDto);
         Integer count = toolParameterDao.queryEntityWithPageCount(toolParameterPageDto);
-        return PageResponse.createBySuccess(data,count);
+        List<ToolParameterVo> result = Lists.newArrayList();
+
+        data.forEach(d->{
+            ToolParameterVo v = new ToolParameterVo();
+            v.setId(d.getId());
+            v.setToolId(d.getToolId());
+            v.setName(d.getName());
+            v.setType(dicService.queryById(new Long(d.getType())).getName());
+            v.setDefaultValue(d.getDefaultValue());
+            v.setPrefix(d.getPrefix());
+            v.setPrefixSplitSymbol(dicService.queryById(new Long(d.getPrefixSplitSymbol())).getName());
+            v.setDesc(d.getDesc());
+            v.setIsMust(d.getIsMust() == 0 ? "否" : "是");
+            v.setIsUseQuotationMarks(d.getIsUseQuotationMarks() == 0? "否" : "是");
+            result.add(v);
+        });
+        return PageResponse.createBySuccess(result,count);
     }
 
     public PageResponse getBasePageList(ToolPageDto toolPageDto){
