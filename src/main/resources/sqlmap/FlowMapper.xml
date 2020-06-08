@@ -132,7 +132,7 @@
     from flow
     where 1=1
     <if test="name != null">
-      and name = #{name}
+      and name LIKE CONCAT('%',#{name},'%')
     </if>
     order by create_time desc
     limit #{pageNum} , #{pageSize}
@@ -144,7 +144,7 @@
     from flow
     where 1=1
     <if test="name != null">
-      and name = #{name}
+      and name LIKE CONCAT('%',#{name},'%')
     </if>
 
   </select>
