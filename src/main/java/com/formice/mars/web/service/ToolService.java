@@ -142,6 +142,10 @@ public class ToolService {
         return toolDao.queryList(toolDto);
     }
 
+    public List<ToolParameter> getParameters(Long toolId){
+        return toolParameterDao.queryList(new ToolParameter(toolId));
+    }
+
     //# 建索引
     //bwa index -a bwtsw -p hg19 hg19.fa 1>hg19.bwa_index.log 2>&1
     //-p 输出文件的前缀，例如对hg19.fa建索引，那么输出文件前缀就写hg19

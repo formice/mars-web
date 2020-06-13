@@ -81,6 +81,11 @@ public class ToolController {
         return Response.createBySuccess(toolService.getList(toolDto));
     }
 
+    @RequestMapping(method = RequestMethod.POST,value = "/parameter")
+    public Response getParameters(Long toolId) throws Exception {
+        return Response.createBySuccess(toolService.getParameters(toolId));
+    }
+
     /**
      @RequestMapping(method = RequestMethod.GET,value = "/delete/{id}")
      public void delete(@PathVariable("id")int id){

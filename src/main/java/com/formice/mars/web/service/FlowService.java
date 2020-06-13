@@ -31,12 +31,14 @@ public class FlowService {
 
     @Autowired
     private ToolParameterDao toolParameterDao;
+    @Autowired
+    private FlowNodeParamDao flowNodeParamDao;
 
 
 
     public void addFlow(String flowJson){
         FlowJsonDto flowJsonDto = JSON.parseObject(flowJson, FlowJsonDto.class);
-        Flow f = new Flow("测试工作流","测试工作流描述");
+        Flow f = new Flow(flowJsonDto.getName(),flowJsonDto.getDesc());
         flowDao.insertSelective(f);
         flowJsonDto.getNodes().forEach(n ->{
             FlowNode node = new FlowNode(f.getId(),Long.valueOf(n.getNodeId().replace("node-","")));
@@ -45,6 +47,11 @@ public class FlowService {
         flowJsonDto.getLines().forEach(l ->{
             FlowLine line = new FlowLine(f.getId(),Long.valueOf(l.getFromId().replace("node-","")),Long.valueOf(l.getToId().replace("node-","")));
             flowLineDao.insertSelective(line);
+        });
+
+        flowJsonDto.getParams().forEach(p ->{
+            FlowNodeParam param = new FlowNodeParam(f.getId(),p.getToolId(),p.getId(),p.getValue());
+            flowNodeParamDao.insertSelective(param);
         });
     }
 

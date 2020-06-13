@@ -118,6 +118,20 @@ CREATE TABLE `flow_line` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8  COMMENT '工作流链接表';
 
+CREATE TABLE `flow_node_param` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `flow_id` bigint(20) NOT NULL COMMENT '所属工作流ID',
+  `tool_id` bigint(20) NOT NULL COMMENT '工具ID',
+  `busi_id` bigint(20) NOT NULL COMMENT '业务ID',
+   `value` varchar(200) DEFAULT NULL COMMENT '用户输入的值',
+  `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` bigint(20) DEFAULT NULL,
+  `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `update_by` bigint(20) DEFAULT NULL,
+  `is_deleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8  COMMENT '工作流配置表';
+
 CREATE TABLE `task` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar (100) NOT NULL COMMENT '名称',
