@@ -14,4 +14,6 @@ public interface FlowNodeParamDao {
     int updateByPrimaryKeySelective(FlowNodeParam record);
 
     int updateByPrimaryKey(FlowNodeParam record);
+
+    FlowNodeParam queryEntity(FlowNodeParam record);
 }

@@ -117,7 +117,7 @@ public class FlowService {
         return result;
     }*/
 
-    public Map<Long,Map<String,Object>> getToolConfig(Long flowId){
+    /*public Map<Long,Map<String,Object>> getToolConfig(Long flowId){
         Map<Long,Map<String,Object>> result = new HashMap<>();
         List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
         nodes.forEach(n -> {
@@ -129,8 +129,29 @@ public class FlowService {
             List<ToolParameter> params = toolParameterDao.queryList(new ToolParameter(toolId));
             map.put("inputs",inputs);
             map.put("outputs",outputs);
+
             map.put("params",params);
             result.put(toolId,map);
+        });
+        return result;
+    }*/
+    public Map<String,Map<String,Object>> getToolConfig(Long flowId){
+        Map<String,Map<String,Object>> result = new HashMap<>();
+        List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
+        nodes.forEach(n -> {
+            //result.put(n.getBusiId(),toolParameterDao.queryList(new ToolParameter(n.getBusiId())));
+            Long toolId = n.getBusiId();
+            Tool t = toolDao.selectByPrimaryKey(toolId);
+            String toolName = t.getName();
+            Map<String,Object> map = Maps.newHashMap();
+            List<ToolInputAndOutput> inputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,16));
+            List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,17));
+            List<ToolParameter> params = toolParameterDao.queryList(new ToolParameter(toolId));
+            map.put("inputs",inputs);
+            map.put("outputs",outputs);
+
+            map.put("params",params);
+            result.put(toolId+"@*-*@"+toolName,map);
         });
         return result;
     }

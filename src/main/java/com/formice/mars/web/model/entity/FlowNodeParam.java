@@ -28,6 +28,11 @@ public class FlowNodeParam {
 
     private Byte isDeleted;
 
+    public FlowNodeParam(Long flowId, Long toolId, Long busiId) {
+        this.flowId = flowId;
+        this.toolId = toolId;
+        this.busiId = busiId;
+    }
 
     public FlowNodeParam(Long flowId, Long toolId, Long busiId, String value) {
         this.flowId = flowId;

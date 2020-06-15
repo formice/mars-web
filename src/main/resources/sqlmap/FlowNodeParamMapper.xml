@@ -150,4 +150,20 @@
       is_deleted = #{isDeleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="queryEntity" parameterType="com.formice.mars.web.model.entity.FlowNodeParam" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from flow_node_param
+    where 1=1
+    <if test="flowId != null">
+      and flow_id = #{flowId}
+    </if>
+    <if test="toolId != null">
+      and tool_id = #{toolId}
+    </if>
+    <if test="busiId != null">
+      and busi_id = #{busiId}
+    </if>
+  </select>
 </mapper>
