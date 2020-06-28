@@ -2,6 +2,7 @@ package com.formice.mars.web.controller;
 
 
 import com.formice.mars.web.service.FlowService;
+import com.formice.mars.web.service.PanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class UploadController {
     @Autowired
     private FlowService flowService;
+    @Autowired
+    private PanService panService;
 
     /**
      * @Title: uploadSource
@@ -32,8 +35,8 @@ public class UploadController {
      */
     @RequestMapping(value="/file" , method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> uploadSource(@RequestParam("file") MultipartFile file , HttpServletRequest request) {
-        System.out.println(file);
+    public Map<String,Object> uploadSource(@RequestParam("file") MultipartFile file , HttpServletRequest request,String folder) {
+        System.out.println(folder);
         String pathString = null;
         if(file!=null) {
             //pathString = "D:/upload/" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" +file.getOriginalFilename();
@@ -41,10 +44,12 @@ public class UploadController {
             //pathString = pathString.substring(0, pathString.length() - 1);
             //pathString = pathString.substring(0, pathString.lastIndexOf("\\"));
             //pathString=request.getSession().getServletContext().getRealPath("/");
-            pathString = "E:\\workspace\\workspace_mars\\mars-web\\upload\\"+file.getOriginalFilename();
+            //System.out.println(request.getSession().getServletContext().getRealPath("mars-web"));
+            System.out.println(System.getProperty("user.dir") + File.separator+"upload");
+            //pathString = "E:\\workspace\\workspace_mars\\mars-web\\upload\\"+file.getOriginalFilename();
             //pathString = "upload";
+            pathString = System.getProperty("user.dir") + File.separator+"upload" + File.separator + file.getOriginalFilename();
         }
-        System.out.println(pathString);
 
         try {
             File files=new File(pathString);
@@ -54,6 +59,8 @@ public class UploadController {
             }*/
             file.transferTo(files);
 
+            //上传到oss
+            panService.upload(file.getOriginalFilename(),folder);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

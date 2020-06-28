@@ -22,6 +22,8 @@ public class TaskRun {
 
     private String value;
 
+    private Integer isRemote;
+
     private Date createTime;
 
     private Long createBy;
@@ -40,13 +42,14 @@ public class TaskRun {
         this.busiId = busiId;
     }
 
-    public TaskRun(Long taskId, Long flowId, Long toolId, Integer busiType, Long busiId,String value) {
+    public TaskRun(Long taskId, Long flowId, Long toolId, Integer busiType, Long busiId,String value,Integer isRemote) {
         this.taskId = taskId;
         this.flowId = flowId;
         this.toolId = toolId;
         this.busiType = busiType;
         this.busiId = busiId;
         this.value = value;
+        this.isRemote = isRemote;
     }
 
     public Long getId() {

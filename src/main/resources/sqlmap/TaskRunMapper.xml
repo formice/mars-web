@@ -9,6 +9,7 @@
     <result column="busi_type" property="busiType" jdbcType="TINYINT" />
     <result column="busi_id" property="busiId" jdbcType="BIGINT" />
     <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="is_remote" property="isRemote" jdbcType="TINYINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="create_by" property="createBy" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -16,7 +17,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, task_id, flow_id, tool_id, busi_type, busi_id, value, create_time, create_by, 
+    id, task_id, flow_id, tool_id, busi_type, busi_id, value, is_remote,create_time, create_by,
     update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -32,12 +33,12 @@
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.TaskRun" >
     insert into task_run (id, task_id, flow_id, 
       tool_id, busi_type, busi_id, 
-      value, create_time, create_by, 
+      value,is_remote, create_time, create_by,
       update_time, update_by, is_deleted
       )
     values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, 
       #{toolId,jdbcType=BIGINT}, #{busiType,jdbcType=TINYINT}, #{busiId,jdbcType=BIGINT}, 
-      #{value,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, 
+      #{value,jdbcType=VARCHAR},#{isRemote,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT},
       #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT}
       )
   </insert>
@@ -64,6 +65,9 @@
       </if>
       <if test="value != null" >
         value,
+      </if>
+      <if test="isRemote != null" >
+        is_remote,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -102,6 +106,9 @@
       </if>
       <if test="value != null" >
         #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="isRemote != null" >
+        #{isRemote,jdbcType=TINYINT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -167,6 +174,7 @@
       busi_type = #{busiType,jdbcType=TINYINT},
       busi_id = #{busiId,jdbcType=BIGINT},
       value = #{value,jdbcType=VARCHAR},
+      is_remote = #{isRemote,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

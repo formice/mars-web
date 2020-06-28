@@ -47,7 +47,7 @@ public class TaskService {
 
        //生成运行时设置
        taskRunDto.getRun().forEach(i ->{
-           taskRunDao.insertSelective(new TaskRun(t.getId(),taskRunDto.getFlowId(),i.getToolId(),i.getType(),i.getId(),i.getValue()));
+           taskRunDao.insertSelective(new TaskRun(t.getId(),taskRunDto.getFlowId(),i.getToolId(),i.getType(),i.getId(),i.getValue(),i.getIsRemote()));
        });
 
        start(taskRunDto.getFlowId(),t.getId());

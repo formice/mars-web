@@ -44,6 +44,8 @@ public class ToolService {
     private ToolTemplateDao toolTemplateDao;
     @Autowired
     private FlowNodeParamDao flowNodeParamDao;
+    @Autowired
+    private PanService panService;
 
 
     public Long addTool(Tool tool){
@@ -208,7 +210,12 @@ public class ToolService {
             TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 16, i.getId()));
             if(t != null) {
                 Dic d = dicService.queryByCode(i.getPrefixSplitSymbol() + "");
-                inputMap.put(i.getName(),i.getPrefix() + d.getValue() + t.getValue());
+
+                String file = t.getValue();
+                if(t.getIsRemote() == 1){
+                    file = panService.download(t.getValue());
+                }
+                inputMap.put(i.getName(),i.getPrefix() + d.getValue() + file);
             }
         });
         //输出
