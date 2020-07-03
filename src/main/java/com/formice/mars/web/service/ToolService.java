@@ -234,11 +234,11 @@ public class ToolService {
         List<ToolParameter> parameters = toolParameterDao.queryList(new ToolParameter(toolId));
         parameters.forEach(p -> {
             Dic d = dicService.queryByCode(p.getPrefixSplitSymbol());
-            System.out.println("taskId:" + taskId+",flowId="+flowId+",toolId:"+toolId+",pId:"+p.getId());
+            //System.out.println("taskId:" + taskId+",flowId="+flowId+",toolId:"+toolId+",pId:"+p.getId());
             //TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 18, p.getId()));
             FlowNodeParam t = flowNodeParamDao.queryEntity(new FlowNodeParam(flowId,toolId,p.getId()));
-            System.out.println(p.getName()+","+p.getPrefix()+","+d.getValue()+",");
-            System.out.println(t.getValue());
+            //System.out.println(p.getName()+","+p.getPrefix()+","+d.getValue()+",");
+            //System.out.println(t.getValue());
             paramMap.put(p.getName(),p.getPrefix()+d.getValue()+t.getValue());
         });
 

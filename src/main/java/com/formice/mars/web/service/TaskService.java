@@ -9,6 +9,8 @@ import com.formice.mars.web.model.dto.TaskRunDto;
 import com.formice.mars.web.model.entity.FlowNode;
 import com.formice.mars.web.model.entity.Task;
 import com.formice.mars.web.model.entity.TaskRun;
+import com.formice.mars.web.tool.ShellUtils;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 
 @Service
+@Log4j2
 public class TaskService {
     @Autowired
     private TaskDao taskDao;
@@ -55,7 +58,7 @@ public class TaskService {
 
     public void start(Long flowId,Long taskId) {
         List<FlowNode> nodes =  flowNodeDao.queryList(new FlowNode(flowId));
-        System.out.println("开始启动任务...");
+        log.info("开始运行工作流...");
         nodes.forEach(n ->{
             String command = null;
             try {
@@ -63,9 +66,13 @@ public class TaskService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println(command.replaceAll("&nbsp;"," "));
+            String c = command.replaceAll("&nbsp;"," ");
+            log.info("开始运行工具："+c);
+            ShellUtils.runShell(c);
+            log.info("工具运行完成...");
+
         });
-        System.out.println("任务结束...");
+        log.info("工作流结束...");
     }
 
 }
