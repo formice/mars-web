@@ -4,7 +4,10 @@
   <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.Task" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="process" property="process" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="create_by" property="createBy" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -12,7 +15,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, status, create_time, create_by, update_time, update_by, is_deleted
+    id, name,process, status,start_time,end_time, create_time, create_by, update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -25,11 +28,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.Task" >
-    insert into task (id, name, status, 
+    insert into task (id, name,process, status,start_time,end_time,
       create_time, create_by, update_time, 
       update_by, is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{process,jdbcType=INTEGER}, #{status,jdbcType=TINYINT},
+      #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP},
       #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.formice.mars.web.model.entity.Task" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
@@ -41,9 +44,20 @@
       <if test="name != null" >
         name,
       </if>
+      <if test="process != null" >
+        process,
+      </if>
       <if test="status != null" >
         status,
       </if>
+
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+
       <if test="createTime != null" >
         create_time,
       </if>
@@ -67,9 +81,20 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="process != null" >
+        #{process,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=TINYINT},
       </if>
+
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -93,9 +118,20 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="process != null" >
+        process = #{process,jdbcType=INTEGER},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
       </if>
+
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -117,7 +153,12 @@
   <update id="updateByPrimaryKey" parameterType="com.formice.mars.web.model.entity.Task" >
     update task
     set name = #{name,jdbcType=VARCHAR},
+      process = #{process,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
+
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -125,4 +166,27 @@
       is_deleted = #{isDeleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="queryEntityWithPage" parameterType="com.formice.mars.web.model.dto.TaskPageDto" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from task
+    where 1=1
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    order by create_time desc
+    limit #{pageNum} , #{pageSize}
+  </select>
+
+  <select id="queryEntityWithPageCount" parameterType="com.formice.mars.web.model.dto.TaskPageDto" resultType="java.lang.Integer">
+    select
+    count(1)
+    from task
+    where 1=1
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
+
+  </select>
 </mapper>

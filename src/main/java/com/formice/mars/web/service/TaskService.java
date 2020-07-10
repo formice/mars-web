@@ -2,9 +2,11 @@ package com.formice.mars.web.service;
 
 
 import com.alibaba.fastjson.JSON;
+import com.formice.mars.web.common.PageResponse;
 import com.formice.mars.web.dao.FlowNodeDao;
 import com.formice.mars.web.dao.TaskDao;
 import com.formice.mars.web.dao.TaskRunDao;
+import com.formice.mars.web.model.dto.TaskPageDto;
 import com.formice.mars.web.model.dto.TaskRunDto;
 import com.formice.mars.web.model.entity.FlowNode;
 import com.formice.mars.web.model.entity.Task;
@@ -14,6 +16,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -53,13 +56,40 @@ public class TaskService {
            taskRunDao.insertSelective(new TaskRun(t.getId(),taskRunDto.getFlowId(),i.getToolId(),i.getType(),i.getId(),i.getValue(),i.getIsRemote()));
        });
 
-       start(taskRunDto.getFlowId(),t.getId());
+       new Thread(()-> {
+           //运行工作流
+           try {
+               start(taskRunDto.getFlowId(),t.getId());
+           } catch (Exception e) {
+               e.printStackTrace();
+               //任务执行异常，状态置：失败，结束时间：当前时间
+               taskDao.updateByPrimaryKeySelective(new Task(t.getId(),22,null,new Date()));
+           }
+       }
+       ).start();
+
+
     }
 
-    public void start(Long flowId,Long taskId) {
+    public void start(Long flowId,Long taskId) throws Exception {
         List<FlowNode> nodes =  flowNodeDao.queryList(new FlowNode(flowId));
-        log.info("开始运行工作流...");
-        nodes.forEach(n ->{
+        log.info("开始运行任务...");
+        //开始运行任务，状态置：运行中，开始时间：当前时间
+        taskDao.updateByPrimaryKeySelective(new Task(taskId,20,new Date(),null));
+
+        //Stream.iterate(0, i -> i + 1).limit(nodes.size()).forEach(i -> {
+        for(int i = 0; i < nodes.size(); i++){
+            FlowNode n = nodes.get(i);
+            String command = toolService.buildRunCommand(flowId, taskId, n.getBusiId());
+            String c = command.replaceAll("&nbsp;"," ");
+            log.info("开始运行工具："+c);
+            ShellUtils.runShell(c);
+            log.info("工具运行完成...");
+            //更新task的process
+            int process = (i+1)*100/nodes.size();
+            taskDao.updateByPrimaryKeySelective(new Task(taskId,process));
+        };
+        /*nodes.forEach(n ->{
             String command = null;
             try {
                 command = toolService.buildRunCommand(flowId,taskId,n.getBusiId());
@@ -70,9 +100,16 @@ public class TaskService {
             log.info("开始运行工具："+c);
             ShellUtils.runShell(c);
             log.info("工具运行完成...");
+        });*/
+        log.info("任务结束...");
+        //任务结束运行，状态置：成功，结束时间：当前时间
+        taskDao.updateByPrimaryKeySelective(new Task(taskId,18,null,new Date()));
+    }
 
-        });
-        log.info("工作流结束...");
+    public PageResponse getPageList(TaskPageDto dto){
+        List<Task> data = taskDao.queryEntityWithPage(dto);
+        Integer count = taskDao.queryEntityWithPageCount(dto);
+        return PageResponse.createBySuccess(data,count);
     }
 
 }

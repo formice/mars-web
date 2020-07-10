@@ -134,6 +134,7 @@
     <if test="flowId != null">
       and flow_id = #{flowId}
     </if>
+    order by id asc
 
   </select>
 </mapper>

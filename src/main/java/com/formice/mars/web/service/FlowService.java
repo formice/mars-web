@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -136,14 +137,14 @@ public class FlowService {
         return result;
     }*/
     public Map<String,Map<String,Object>> getToolConfig(Long flowId){
-        Map<String,Map<String,Object>> result = new HashMap<>();
+        Map<String,Map<String,Object>> result = new LinkedHashMap<>();
         List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
         nodes.forEach(n -> {
             //result.put(n.getBusiId(),toolParameterDao.queryList(new ToolParameter(n.getBusiId())));
             Long toolId = n.getBusiId();
             Tool t = toolDao.selectByPrimaryKey(toolId);
             String toolName = t.getName();
-            Map<String,Object> map = Maps.newHashMap();
+            Map<String,Object> map = Maps.newLinkedHashMap();
             List<ToolInputAndOutput> inputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,16));
             List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,17));
             List<ToolParameter> params = toolParameterDao.queryList(new ToolParameter(toolId));

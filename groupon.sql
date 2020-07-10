@@ -136,6 +136,9 @@ CREATE TABLE `task` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar (100) NOT NULL COMMENT '名称',
   `status` tinyint(20) Default NULL COMMENT '状态',
+  `process` varchar (100) NOT NULL COMMENT '执行进度',
+  `start_time` timestamp  DEFAULT NULL COMMENT '开始时间',
+  `end_time` timestamp  DEFAULT NULL COMMENT '结束时间',
   `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_by` bigint(20) DEFAULT NULL,
   `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -207,3 +210,10 @@ INSERT INTO `dic` VALUES (null,'15', '浮点型', '','tool_parameter_type', null
 
 INSERT INTO `dic` VALUES (null,'16', '输入','', 'tool_input_and_output_cate', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'17', '输出','', 'tool_input_and_output_cate', null, null, null, null, 0);
+
+
+INSERT INTO `dic` VALUES (null,'18', '成功','', 'task_status', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'19', '等待运行','', 'task_status', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'20', '运行中','', 'task_status', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'21', '停止','', 'task_status', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'22', '失败','', 'task_status', null, null, null, null, 0);
