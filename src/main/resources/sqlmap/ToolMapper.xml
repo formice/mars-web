@@ -198,7 +198,7 @@
       and type = #{type}
     </if>
     order by create_time desc
-    limit #{pageNum} , #{pageSize}
+    limit #{start} , #{pageSize}
   </select>
 
   <select id="queryEntityWithPageCount" parameterType="com.formice.mars.web.model.dto.ToolPageDto" resultType="java.lang.Integer">

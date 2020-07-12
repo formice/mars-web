@@ -28,7 +28,7 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/pagelist")
     public PageResponse getBasePageList(TaskPageDto dto){
-        log.info(dto);
+        log.info(dto.getPageNum()+","+dto.getPageSize());
         return taskService.getPageList(dto);
     }
 
