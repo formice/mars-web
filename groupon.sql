@@ -217,3 +217,15 @@ INSERT INTO `dic` VALUES (null,'19', '等待运行','', 'task_status', null, nul
 INSERT INTO `dic` VALUES (null,'20', '运行中','', 'task_status', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'21', '停止','', 'task_status', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'22', '失败','', 'task_status', null, null, null, null, 0);
+
+
+
+INSERT INTO `dic` VALUES (null,'23', 'fastq', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'24', 'fq', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'25', 'bam', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'26', 'vcf', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'27', 'sra', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'28', 'sai', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'29', 'sam', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'30', 'fai', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'31', 'gz', '','tool_input_and_output_file_format', null, null, null, null, 0);
