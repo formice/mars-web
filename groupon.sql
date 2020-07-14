@@ -199,8 +199,9 @@ INSERT INTO `dic` VALUES (null,'9', 'fa', '','tool_input_and_output_file_format'
 
 
 INSERT INTO `dic` VALUES (null,'10', '空格',' ', 'tool_input_and_output_prefix_split_symbol', null, null, null, null, 0);
-INSERT INTO `dic` VALUES (null,'11', '空', '','tool_input_and_output_file_format', null, null, null, null, 0);
-INSERT INTO `dic` VALUES (null,'12', 'tgz','', 'tool_input_and_output_file_format', null, null, null, null, 0);
+
+/*INSERT INTO `dic` VALUES (null,'11', '空', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'12', 'tgz','', 'tool_input_and_output_file_format', null, null, null, null, 0);*/
 
 
 INSERT INTO `dic` VALUES (null,'13', '字符串', '','tool_parameter_type', null, null, null, null, 0);
