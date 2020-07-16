@@ -187,10 +187,12 @@ CREATE TABLE `dic` (
 
 INSERT INTO `dic` VALUES (null,'1', '公共工具','', 'tool_cate', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'2', '私有工具','', 'tool_cate', null, null, null, null, 0);
+
 INSERT INTO `dic` VALUES (null,'3', '索引工具','', 'tool_type', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'4', '质控工具','', 'tool_type', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'5', '比对工具','', 'tool_type', null, null, null, null, 0);
-INSERT INTO `dic` VALUES (null,'6', '其它','', 'tool_type', null, null, null, null, 0);
+/*INSERT INTO `dic` VALUES (null,'6', '其它','', 'tool_type', null, null, null, null, 0);*/
+
 INSERT INTO `dic` VALUES (null,'7', '文件','', 'tool_input_and_output_type', null, null, null, null, 0);
 
 INSERT INTO `dic` VALUES (null,'8', 'fasta','', 'tool_input_and_output_file_format', null, null, null, null, 0);
@@ -230,3 +232,11 @@ INSERT INTO `dic` VALUES (null,'28', 'sai', '','tool_input_and_output_file_forma
 INSERT INTO `dic` VALUES (null,'29', 'sam', '','tool_input_and_output_file_format', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'30', 'fai', '','tool_input_and_output_file_format', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'31', 'gz', '','tool_input_and_output_file_format', null, null, null, null, 0);
+
+
+
+INSERT INTO `dic` VALUES (null,'32', '组装工具','', 'tool_type', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'33', '注释工具','', 'tool_type', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'34', '突变查找工具','', 'tool_type', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'35', '格式转换工具','', 'tool_type', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'36', '其它工具','', 'tool_type', null, null, null, null, 0);
