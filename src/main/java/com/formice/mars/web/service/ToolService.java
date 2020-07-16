@@ -90,7 +90,9 @@ public class ToolService {
             v.setMinNum(d.getMinNum());
             v.setMaxNum(d.getMaxNum());
             v.setPrefix(d.getPrefix());
-            v.setPrefixSplitSymbol(dicService.queryById(new Long(d.getPrefixSplitSymbol())).getName());
+            if(d.getPrefixSplitSymbol() != null) {
+                v.setPrefixSplitSymbol(dicService.queryById(new Long(d.getPrefixSplitSymbol())).getName());
+            }
             v.setFileFormat(dicService.queryById(new Long(d.getFileFormat())).getName());
             //v.setFileSplitSymbol(dicService.queryById(new Long(d.getFileSplitSymbol())).getName());
             v.setDesc(d.getDesc());
@@ -116,7 +118,9 @@ public class ToolService {
             v.setType(dicService.queryById(new Long(d.getType())).getName());
             v.setDefaultValue(d.getDefaultValue());
             v.setPrefix(d.getPrefix());
-            v.setPrefixSplitSymbol(dicService.queryById(new Long(d.getPrefixSplitSymbol())).getName());
+            if(d.getPrefixSplitSymbol() != null) {
+                v.setPrefixSplitSymbol(dicService.queryById(new Long(d.getPrefixSplitSymbol())).getName());
+            }
             v.setDesc(d.getDesc());
             v.setIsMust(d.getIsMust() == 0 ? "否" : "是");
             v.setIsUseQuotationMarks(d.getIsUseQuotationMarks() == 0? "否" : "是");
