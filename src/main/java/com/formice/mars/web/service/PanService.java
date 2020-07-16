@@ -143,14 +143,14 @@ public class PanService {
         }
     }
 
-    public String download(String file){
+    public String download(String ossFile,String savePath){
         // 下载OSS文件到本地文件。如果指定的本地文件存在会覆盖，不存在则新建。
-
-        String fileName = file.split(File.separator)[file.split(File.separator).length-1];
-        String localFile = System.getProperty("user.dir") + File.separator+"download" + File.separator + fileName;
-        log.info("开始下载文件["+file+"] --> ["+localFile+"]");
-        ossClient.getObject(new GetObjectRequest(ossProvider.getBucketName(), file), new File(localFile));
-        log.info("下载完成文件["+file+"] --> ["+localFile+"]");
+        String fileName = ossFile.split(File.separator)[ossFile.split(File.separator).length-1];
+        //sString localFile = System.getProperty("user.dir") + File.separator+"download" + File.separator + fileName;
+        String localFile = savePath+fileName;
+        log.info("开始下载文件["+ossFile+"] --> ["+localFile+"]");
+        ossClient.getObject(new GetObjectRequest(ossProvider.getBucketName(), ossFile), new File(localFile));
+        log.info("下载完成文件");
         return localFile;
         // 关闭OSSClient。
         //ossClient.shutdown();

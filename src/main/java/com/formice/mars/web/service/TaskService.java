@@ -2,6 +2,7 @@ package com.formice.mars.web.service;
 
 
 import com.alibaba.fastjson.JSON;
+import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
 import com.formice.mars.web.dao.FlowNodeDao;
 import com.formice.mars.web.dao.TaskDao;
@@ -16,6 +17,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -71,16 +73,27 @@ public class TaskService {
 
     }
 
+    public String getTaskPath(Long flowId,Long taskId){
+       return Constant.TASK_ROOT_PATH+flowId+ File.separator+taskId+File.separator;
+    }
+
     public void start(Long flowId,Long taskId) throws Exception {
         List<FlowNode> nodes =  flowNodeDao.queryList(new FlowNode(flowId));
         log.info("开始运行任务...");
         //开始运行任务，状态置：运行中，开始时间：当前时间
         taskDao.updateByPrimaryKeySelective(new Task(taskId,20,new Date(),null));
 
+        //1.初始化task运行的目录
+        String path = getTaskPath(flowId,taskId);
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
         //Stream.iterate(0, i -> i + 1).limit(nodes.size()).forEach(i -> {
         for(int i = 0; i < nodes.size(); i++){
             FlowNode n = nodes.get(i);
-            String command = toolService.buildRunCommand(flowId, taskId, n.getBusiId());
+            String command = toolService.buildRunCommand(flowId, taskId, n.getBusiId(),path);
             String c = command.replaceAll("&nbsp;"," ");
             log.info("开始运行工具："+c);
             ShellUtils.runShell(c);

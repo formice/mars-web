@@ -205,7 +205,7 @@ public class ToolService {
     bwa mem -t 3   /data/flow1/input/ref.fa   /data/flow1/input/read_1.fastq.gz   /data/flow1/input/read_2.fastq.gz  | samtools view -Sb  ->   /data/flow1/output/sample.bam
     samtools sort -@ 2 -m 5 -O bam -o /data/flow1/output/sample.sorted.bam  /data/flow1/output/sample.bam -T PREFIX.bam
     */
-    public String buildRunCommand(Long flowId,Long taskId,Long toolId) throws Exception {
+    public String buildRunCommand(Long flowId,Long taskId,Long toolId,String path) throws Exception {
         String result = null;
         //输入
         Map<String,String> inputMap = new HashMap<String,String>();
@@ -215,9 +215,9 @@ public class ToolService {
             if(t != null) {
                 Dic d = dicService.queryByCode(i.getPrefixSplitSymbol() + "");
 
-                String file = t.getValue();
+                String file = path+t.getValue();
                 if(t.getIsRemote() == 1){
-                    file = panService.download(t.getValue());
+                    file = panService.download(t.getValue(),path);
                 }
                 //inputMap.put(i.getName(),i.getPrefix() + d.getValue() + file);
                 //去掉前缀
@@ -233,7 +233,7 @@ public class ToolService {
                 Dic d = dicService.queryByCode(o.getPrefixSplitSymbol() + "");
                 //outputMap.put(o.getName(),o.getPrefix() + d.getValue() + t.getValue());
                 //去掉前缀
-                outputMap.put(o.getName(),t.getValue());
+                outputMap.put(o.getName(),path+t.getValue());
             }
         });
 
@@ -276,6 +276,79 @@ public class ToolService {
         }
         return result;
     }
+
+
+    /*public String buildRunCommand(Long flowId,Long taskId,Long toolId) throws Exception {
+        String result = null;
+        //输入
+        Map<String,String> inputMap = new HashMap<String,String>();
+        List<ToolInputAndOutput> inputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,16));
+        inputs.forEach(i -> {
+            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 16, i.getId()));
+            if(t != null) {
+                Dic d = dicService.queryByCode(i.getPrefixSplitSymbol() + "");
+
+                String file = t.getValue();
+                if(t.getIsRemote() == 1){
+                    file = panService.download(t.getValue(),path);
+                }
+                //inputMap.put(i.getName(),i.getPrefix() + d.getValue() + file);
+                //去掉前缀
+                inputMap.put(i.getName(),file);
+            }
+        });
+        //输出
+        Map<String,String> outputMap = new HashMap<String,String>();
+        List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,17));
+        outputs.forEach(o -> {
+            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 17, o.getId()));
+            if(t != null) {
+                Dic d = dicService.queryByCode(o.getPrefixSplitSymbol() + "");
+                //outputMap.put(o.getName(),o.getPrefix() + d.getValue() + t.getValue());
+                //去掉前缀
+                outputMap.put(o.getName(),t.getValue());
+            }
+        });
+
+        //参数
+        Map<String,String> paramMap = new HashMap<String,String>();
+        List<ToolParameter> parameters = toolParameterDao.queryList(new ToolParameter(toolId));
+        parameters.forEach(p -> {
+            Dic d = dicService.queryByCode(p.getPrefixSplitSymbol());
+            //System.out.println("taskId:" + taskId+",flowId="+flowId+",toolId:"+toolId+",pId:"+p.getId());
+            //TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 18, p.getId()));
+            FlowNodeParam t = flowNodeParamDao.queryEntity(new FlowNodeParam(flowId,toolId,p.getId()));
+            //paramMap.put(p.getName(),p.getPrefix()+d.getValue()+t.getValue());
+            //去掉前缀
+            paramMap.put(p.getName(),t.getValue());
+        });
+
+
+        List<ToolTemplate> ts =  toolTemplateDao.queryList(new ToolTemplate(toolId));
+        if(!CollectionUtils.isEmpty(ts)) {
+            //new一个模板资源加载器
+            StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
+            *//* 使用Beetl默认的配置。
+             * Beetl可以使用配置文件的方式去配置，但由于此处是直接上手的例子，
+             * 我们不去管配置的问题，只需要基本的默认配置就可以了。
+             *//*
+            Configuration config = Configuration.defaultConfiguration();
+            //Beetl的核心GroupTemplate
+            GroupTemplate groupTemplate = new GroupTemplate(resourceLoader, config);
+            //我们自定义的模板，其中${title}就Beetl默认的占位符
+            String testTemplate=ts.get(0).getContent();
+            Template template = groupTemplate.getTemplate(testTemplate);
+            //template.binding(templateMap);
+            template.binding("input",inputMap);
+            template.binding("output",outputMap);
+            template.binding("param",paramMap);
+            //渲染字符串
+            result = template.render();
+            //System.out.println("111："+result.replaceAll("&nbsp;"," "));
+            //sb.append(str);
+        }
+        return result;
+    }*/
 
     public void main(String [] args) throws IOException {
         /*//new一个模板资源加载器
