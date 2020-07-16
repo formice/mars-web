@@ -219,7 +219,9 @@ public class ToolService {
                 if(t.getIsRemote() == 1){
                     file = panService.download(t.getValue());
                 }
-                inputMap.put(i.getName(),i.getPrefix() + d.getValue() + file);
+                //inputMap.put(i.getName(),i.getPrefix() + d.getValue() + file);
+                //去掉前缀
+                inputMap.put(i.getName(),file);
             }
         });
         //输出
@@ -229,7 +231,9 @@ public class ToolService {
             TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 17, o.getId()));
             if(t != null) {
                 Dic d = dicService.queryByCode(o.getPrefixSplitSymbol() + "");
-                outputMap.put(o.getName(),o.getPrefix() + d.getValue() + t.getValue());
+                //outputMap.put(o.getName(),o.getPrefix() + d.getValue() + t.getValue());
+                //去掉前缀
+                outputMap.put(o.getName(),t.getValue());
             }
         });
 
@@ -241,9 +245,9 @@ public class ToolService {
             //System.out.println("taskId:" + taskId+",flowId="+flowId+",toolId:"+toolId+",pId:"+p.getId());
             //TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 18, p.getId()));
             FlowNodeParam t = flowNodeParamDao.queryEntity(new FlowNodeParam(flowId,toolId,p.getId()));
-            //System.out.println(p.getName()+","+p.getPrefix()+","+d.getValue()+",");
-            //System.out.println(t.getValue());
-            paramMap.put(p.getName(),p.getPrefix()+d.getValue()+t.getValue());
+            //paramMap.put(p.getName(),p.getPrefix()+d.getValue()+t.getValue());
+            //去掉前缀
+            paramMap.put(p.getName(),t.getValue());
         });
 
 
