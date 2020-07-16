@@ -216,7 +216,7 @@
     from tool_parameter
     where tool_id = #{toolId,jdbcType=BIGINT}
 
-    limit #{pageNum} , #{pageSize}
+    limit #{start} , #{pageSize}
   </select>
 
   <select id="queryEntityWithPageCount" parameterType="com.formice.mars.web.model.dto.ToolParameterPageDto" resultType="java.lang.Integer">

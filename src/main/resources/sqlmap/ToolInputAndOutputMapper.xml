@@ -254,7 +254,7 @@
     <if test="cate != null">
       and cate = #{cate}
     </if>
-    limit #{pageNum} , #{pageSize}
+    limit #{start} , #{pageSize}
   </select>
 
   <select id="queryEntityWithPageCount" parameterType="com.formice.mars.web.model.dto.ToolInputAndOutputPageDto" resultType="java.lang.Integer">
