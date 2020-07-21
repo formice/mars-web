@@ -226,7 +226,13 @@
     <if test="cate != null">
       and cate = #{cate}
     </if>
+    <if test="name != null">
+      and name LIKE CONCAT('%',#{name},'%')
+    </if>
     order by create_time desc
+    <if test="limit != null">
+    limit #{limit}
+    </if>
   </select>
 
 </mapper>

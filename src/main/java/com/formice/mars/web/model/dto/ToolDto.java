@@ -8,4 +8,6 @@ import lombok.NoArgsConstructor;
 public class ToolDto{
     private Integer cate;
     private Integer type;
+    private String name;
+    private Integer limit;
 }
