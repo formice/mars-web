@@ -38,7 +38,7 @@ public class Response<T> implements Serializable{
     public Response(){
 
     }
-    private Response(int code){
+    public Response(int code){
         this.code=code;
     }
     private Response(int code, T data){
