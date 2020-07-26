@@ -1,11 +1,7 @@
 package com.formice.mars.web.controller;
 
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.formice.mars.web.common.Response;
+import com.formice.mars.web.model.enums.ResponseCode;
 import com.formice.mars.web.service.UcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,13 +10,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Random;
+
 
 @Controller
 @RequestMapping(value="/uc")
 public class UcController{
 	@Autowired
 	private UcService ucService;
-	
+
+	@RequestMapping(value="/login/quick")
+	public @ResponseBody Response login(HttpServletRequest request,String mobile,String code){
+		return ucService.quickLogin(request, mobile, code);
+	}
+
+	/*@RequestMapping(value = "/login/page")
+	public String loginJsp() {
+		return "login/index.html";
+	}*/
+
+	@RequestMapping(value = "/login/redirect")
+	public @ResponseBody Response loginRedirect() {
+		return new Response(ResponseCode.CODE_USER_NOT_LOGIN.getCode());
+	}
+
+
 	@RequestMapping(value="/mlogin")
 	public ModelAndView mlogin(HttpServletRequest request){
 		//request.setAttribute("from", request.getParameter("from"));

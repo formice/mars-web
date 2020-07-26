@@ -83,6 +83,7 @@ CREATE TABLE `tool_template` (
 
 CREATE TABLE `flow` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '用户Id',
   `name` varchar(200) NOT NULL COMMENT '名称',
   `desc` varchar(200) DEFAULT NULL COMMENT '描述',
   `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

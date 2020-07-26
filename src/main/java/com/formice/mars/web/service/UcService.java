@@ -9,6 +9,7 @@ import com.formice.mars.web.model.entity.Customer;
 import com.formice.mars.web.model.entity.Sms;
 import com.formice.mars.web.model.enums.ResponseCode;
 import com.formice.mars.web.tool.Encode;
+import com.formice.mars.web.tool.UUIDGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class UcService {
 	private CustomerDao customerDao;
 	@Autowired
 	private SmsDao smsDao;
+
+	@Autowired
+	private UserTicketService userTicketService;
 	
 	//第一信息
 	//用户名
@@ -44,6 +48,47 @@ public class UcService {
 
 	public Customer getCustomer(String mobile) {
 		return customerDao.queryCustomerByMobile(mobile);
+	}
+
+	public Response quickLogin(HttpServletRequest request, String mobile, String code){
+		Response resp = new Response();
+		String result = "";
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("mobile", mobile);
+		params.put("code", code);
+		List<Sms> smsList = smsDao.querySmsByMobileAndCode(params);
+		if (CollectionUtils.isEmpty(smsList)) {
+			// 验证码输入错误
+			return  new Response(ResponseCode.CODE_VERFI_CODE_INPUT_WRONG.getCode());
+		}
+
+		if (new Date().getTime() > smsList.get(0).getExpireTime()) {// 过期
+			// 验证码过期
+			return new Response(ResponseCode.CODE_VERFI_CODE_OUT_OF_DATE.getCode());
+		}
+
+		Customer user = getCustomer(mobile);
+		if (user != null) {// 用户已经存在，直接登录
+			SessionBag.createSession(request, Constant.USER_KEY, user);
+			resp = Response.createBySuccess(userTicketService.createTicket(user.getId()));
+			log.info("用户：" + mobile + "登录成功," + " from IP:" + request.getRemoteAddr());
+		} else {// 用户还未注册
+			//注册
+			Customer entity = new Customer();
+			entity.setMobile(mobile);
+			//entity.setPwd(Encode.MD5(pwd));
+			entity.setCreateTime(new Date());
+			int n = customerDao.saveCustomer(entity);
+			// 如果用户注册成功，就:(1)将当前user加入到session中,登陆该用户
+			if (n == 1) {
+				log.info("用户：" + mobile + "登录并注册成功," + " from IP:" + request.getRemoteAddr());
+				// 用户注册成功后，直接登录系统
+				SessionBag.createSession(request, Constant.USER_KEY, entity);
+				resp = Response.createBySuccess(userTicketService.createTicket(user.getId()));
+			}
+		}
+		return resp;
 	}
 
 	public Response login(HttpServletRequest request, String mobile, String pwd) {

@@ -10,6 +10,8 @@ import java.util.Date;
 public class Flow {
     private Long id;
 
+    private Long userId;
+
     private String name;
 
     private String desc;
@@ -25,6 +27,12 @@ public class Flow {
     private Integer isDeleted;
 
     public Flow(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+    }
+
+    public Flow(Long userId, String name, String desc) {
+        this.userId = userId;
         this.name = name;
         this.desc = desc;
     }

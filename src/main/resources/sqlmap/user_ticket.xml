@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.formice.mars.web.dao.UserTicketDao">
+	<resultMap id="UserTicketResult" type="com.formice.mars.web.model.entity.UserTicket">
+		<id column="id" property="id"/>
+		<result column="user_id" property="userId" />
+		<result column="ticket" property="ticket" />
+		<result column="expire_dis" property="expireDis" />
+		<result column="expire_time" property="expireTime" />
+	</resultMap>
+	
+	<insert id="saveUserTicket" parameterType="com.formice.mars.web.model.entity.UserTicket" useGeneratedKeys="true" keyProperty="id">
+             insert into user_ticket(user_id,ticket,expire_dis,expire_time,create_time,create_by,is_deleted) values
+         (       
+         #{userId},
+         #{ticket},
+         #{expireDis},
+         #{expireTime},
+         #{createTime},
+         #{createBy},
+         0
+         )
+    </insert>
+	
+	
+	<select id="queryUserTicketByTicket" resultMap="UserTicketResult" parameterType="Map">
+		select id,user_id,ticket,expire_dis,expire_time
+		from user_ticket
+		where is_deleted = 0
+		and ticket = #{ticket}
+	</select>
+	
+	<update id="delUserTicketByUserIdAndTicket"  parameterType="Map">
+		update user_ticket
+		set is_deleted =1
+		where is_deleted = 0
+		and user_id = #{userId}
+		and ticket = #{ticket}
+	</update>
+
+</mapper>

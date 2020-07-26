@@ -6,4 +6,5 @@ public class Constant {
     public static final String TASK_ROOT_PATH ="/opt/data/";
 
     public static final String USER_KEY = "USER_KEY";
+    public static final String CURRENT_USER_ID = "CURRENT_USER_ID";
 }

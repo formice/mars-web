@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PageDto {
+public class PageDto extends BaseDto{
     protected int pageNum;
     protected int pageSize;
     protected int start;

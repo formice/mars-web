@@ -3,13 +3,13 @@ package com.formice.mars.web.model.enums;
 public enum ResponseCode {
     SUCCESS(200,"成功"),
     ERROR(1,"错误"),
-    NEED_REGISTER(10,"需要注册,请授权登录!"),
-    NEED_LOGIN(12,"需要登录,请登录!"),
+    //NEED_REGISTER(10,"需要注册,请授权登录!"),
+    //NEED_LOGIN(12,"需要登录,请登录!"),
 
 
-    TOMANYLOGIN(11,"账号被挤出."),
-    ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT"),
-
+    //TOMANYLOGIN(11,"账号被挤出."),
+    //ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT"),
+    CODE_USER_NOT_LOGIN(10000000, "您还未登录，请登录！"),
     CODE_ACCOUNT_NOT_EXIST(10000001, "账户名不存在"),
     CODE_ACCOUNT_PWD_NOT_MATCH(10000002, "密码输入错误"),
     CODE_USER_IDENTITY_ERROR(10000003, "用户身份错误"),

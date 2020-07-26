@@ -2,7 +2,9 @@ package com.formice.mars.web.service;
 
 
 import com.alibaba.fastjson.JSON;
+import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
+import com.formice.mars.web.common.SessionBag;
 import com.formice.mars.web.dao.*;
 import com.formice.mars.web.model.dto.FlowJsonDto;
 import com.formice.mars.web.model.dto.FlowPageDto;
@@ -57,6 +59,9 @@ public class FlowService {
     }
 
     public PageResponse getPageList(FlowPageDto flow){
+        Long userId = SessionBag.get(Constant.CURRENT_USER_ID,Long.class);
+        System.out.println("当前userId:"+userId);
+        flow.setUserId(userId);
         List<Flow> data = flowDao.queryEntityWithPage(flow);
         Integer count = flowDao.queryEntityWithPageCount(flow);
         return PageResponse.createBySuccess(data,count);
