@@ -1,8 +1,10 @@
 package com.formice.mars.web.controller;
 
 
+import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
 import com.formice.mars.web.common.Response;
+import com.formice.mars.web.common.SessionBag;
 import com.formice.mars.web.model.dto.ToolDto;
 import com.formice.mars.web.model.dto.ToolInputAndOutputPageDto;
 import com.formice.mars.web.model.dto.ToolPageDto;
@@ -30,6 +32,7 @@ public class ToolController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/add")
     public Response add(Tool tool){
+        tool.setUserId(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         return Response.createBySuccess(toolService.addTool(tool));
     }
 
@@ -70,6 +73,7 @@ public class ToolController {
     @RequestMapping(method = RequestMethod.POST,value = "/base/pagelist")
     public PageResponse getBasePageList(ToolPageDto toolPageDto){
         System.out.println(toolPageDto);
+        toolPageDto.setUserId(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         return toolService.getBasePageList(toolPageDto);
     }
 
@@ -82,6 +86,7 @@ public class ToolController {
     @RequestMapping(method = RequestMethod.POST,value = "/list")
     public Response getList(ToolDto toolDto){
         System.out.println(toolDto);
+        toolDto.setUserId(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         return Response.createBySuccess(toolService.getList(toolDto));
     }
 

@@ -135,6 +135,7 @@ public class ToolService {
         data.forEach(t ->{
             ToolPageListVo tv = new ToolPageListVo();
             tv.setId(t.getId());
+            tv.setUserId(t.getUserId());
             tv.setName(t.getName());
             tv.setType(dicService.queryById(new Long(t.getType())).getName());
             tv.setHelp(t.getHelp());

@@ -3,6 +3,7 @@
 <mapper namespace="com.formice.mars.web.dao.ToolDao">
   <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.Tool">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="cate" jdbcType="TINYINT" property="cate" />
@@ -17,7 +18,7 @@
     <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, cate, container_type, container_addr, website, help, create_time,
+    id, user_id,name, type, cate, container_type, container_addr, website, help, create_time,
     create_by, update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,12 +32,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.Tool">
-    insert into tool (id, name, type,
+    insert into tool (id, user_id, name, type,
       cate, container_type, container_addr,
       website, help, create_time,
       create_by, update_time, update_by,
       is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT},
       #{cate,jdbcType=TINYINT}, #{containerType,jdbcType=TINYINT}, #{containerAddr,jdbcType=VARCHAR},
       #{website,jdbcType=VARCHAR}, #{help,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT},
@@ -47,6 +48,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="userId != null">
+        user_id,
       </if>
       <if test="name != null">
         name,
@@ -88,6 +92,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -197,6 +204,9 @@
     <if test="type != null">
       and type = #{type}
     </if>
+    <if test="userId != null">
+      and user_id = #{userId} or user_id = -88
+    </if>
     order by create_time desc
     limit #{start} , #{pageSize}
   </select>
@@ -211,6 +221,9 @@
     </if>
     <if test="type != null">
       and type = #{type,jdbcType=TINYINT}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId} or user_id = -88
     </if>
 
   </select>
@@ -228,6 +241,9 @@
     </if>
     <if test="name != null">
       and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId} or user_id = -88
     </if>
     order by create_time desc
     <if test="limit != null">

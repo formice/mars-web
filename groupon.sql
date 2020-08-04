@@ -5,6 +5,7 @@
 DROP TABLE IF EXISTS `tool`;
 CREATE TABLE `tool` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '用户Id',
   `name` varchar(200) NOT NULL,
   `type` tinyint(4) DEFAULT NULL COMMENT '工具类型 ',
   `cate` tinyint(4) DEFAULT NULL COMMENT '工具分类',

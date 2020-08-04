@@ -10,4 +10,5 @@ public class ToolDto{
     private Integer type;
     private String name;
     private Integer limit;
+    private Long userId;
 }
