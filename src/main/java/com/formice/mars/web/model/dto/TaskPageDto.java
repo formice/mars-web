@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TaskPageDto extends PageDto{
     private String name;
+    private Long userId;
 }

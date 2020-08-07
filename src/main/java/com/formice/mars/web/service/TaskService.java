@@ -4,6 +4,7 @@ package com.formice.mars.web.service;
 import com.alibaba.fastjson.JSON;
 import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
+import com.formice.mars.web.common.SessionBag;
 import com.formice.mars.web.dao.FlowNodeDao;
 import com.formice.mars.web.dao.TaskDao;
 import com.formice.mars.web.dao.TaskRunDao;
@@ -39,8 +40,9 @@ public class TaskService {
 
    public void create(String json){
         TaskRunDto taskRunDto = JSON.parseObject(json, TaskRunDto.class);
+        Long userId = SessionBag.get(Constant.CURRENT_USER_ID,Long.class);
         //生成task
-        Task t = new Task(taskRunDto.getName());
+        Task t = new Task(userId,taskRunDto.getName(),userId);
         taskDao.insertSelective(t);
 
         /*//生成输入
@@ -61,11 +63,11 @@ public class TaskService {
        new Thread(()-> {
            //运行工作流
            try {
-               start(taskRunDto.getFlowId(),t.getId());
+               start(taskRunDto.getFlowId(),t.getId(),userId);
            } catch (Exception e) {
                e.printStackTrace();
                //任务执行异常，状态置：失败，结束时间：当前时间
-               taskDao.updateByPrimaryKeySelective(new Task(t.getId(),22,null,new Date()));
+               taskDao.updateByPrimaryKeySelective(new Task(t.getId(),22,null,new Date(),userId));
            }
        }
        ).start();
@@ -77,11 +79,11 @@ public class TaskService {
        return Constant.TASK_ROOT_PATH+flowId+ File.separator+taskId+File.separator;
     }
 
-    public void start(Long flowId,Long taskId) throws Exception {
+    public void start(Long flowId,Long taskId,Long userId) throws Exception {
         List<FlowNode> nodes =  flowNodeDao.queryList(new FlowNode(flowId));
         log.info("开始运行任务...");
         //开始运行任务，状态置：运行中，开始时间：当前时间
-        taskDao.updateByPrimaryKeySelective(new Task(taskId,20,new Date(),null));
+        taskDao.updateByPrimaryKeySelective(new Task(taskId,20,new Date(),null,userId));
 
         //1.初始化task运行的目录
         String path = getTaskPath(flowId,taskId);
@@ -116,7 +118,7 @@ public class TaskService {
         });*/
         log.info("任务结束...");
         //任务结束运行，状态置：成功，结束时间：当前时间
-        taskDao.updateByPrimaryKeySelective(new Task(taskId,18,null,new Date()));
+        taskDao.updateByPrimaryKeySelective(new Task(taskId,18,null,new Date(),userId));
     }
 
     public PageResponse getPageList(TaskPageDto dto){

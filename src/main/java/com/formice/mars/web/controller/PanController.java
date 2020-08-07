@@ -19,8 +19,14 @@ public class PanController {
     @Autowired
     private PanService panService;
 
-    @RequestMapping(method = RequestMethod.GET,value = "/file")
+    @RequestMapping(method = RequestMethod.GET,value = "/folder/root")
     public Response  getRootDir(String folder){
+        log.info("folder:"+folder);
+        return Response.createBySuccess(panService.getRootDir(folder));
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value = "/file")
+    public Response  file(String folder){
         log.info("folder:"+folder);
         return Response.createBySuccess(panService.getFile(folder));
     }

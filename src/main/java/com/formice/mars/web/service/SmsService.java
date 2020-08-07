@@ -10,11 +10,11 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.formice.mars.web.dao.SmsDao;
 import com.formice.mars.web.model.entity.Sms;
+import com.formice.mars.web.tool.MathUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.Random;
 
 @Service
 public class SmsService {
@@ -22,7 +22,7 @@ public class SmsService {
     private SmsDao smsDao;
 
     public void sendCode(String mobile){
-        sendCode(mobile,"ABC商城","SMS_197885668",String.valueOf((new Random()).nextInt(9999)));
+        sendCode(mobile,"ABC商城","SMS_197885668",String.valueOf(MathUtils.getRandom(1000,9999)));
     }
 
     public void sendCode(String mobile,String signName,String templateCode,String code){

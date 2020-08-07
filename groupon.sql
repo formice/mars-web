@@ -136,6 +136,7 @@ CREATE TABLE `flow_node_param` (
 
 CREATE TABLE `task` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '用户Id',
   `name` varchar (100) NOT NULL COMMENT '名称',
   `status` tinyint(20) Default NULL COMMENT '状态',
   `process` varchar (100) NOT NULL COMMENT '执行进度',

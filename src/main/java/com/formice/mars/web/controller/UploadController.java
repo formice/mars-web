@@ -60,6 +60,7 @@ public class UploadController {
             file.transferTo(files);
 
             //上传到oss
+            System.out.println(file.getOriginalFilename()+","+folder);
             panService.upload(file.getOriginalFilename(),folder);
         } catch (Exception e) {
             // TODO Auto-generated catch block

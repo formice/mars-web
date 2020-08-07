@@ -9,7 +9,6 @@ import com.formice.mars.web.model.entity.Customer;
 import com.formice.mars.web.model.entity.Sms;
 import com.formice.mars.web.model.enums.ResponseCode;
 import com.formice.mars.web.tool.Encode;
-import com.formice.mars.web.tool.UUIDGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,9 @@ public class UcService {
 
 	@Autowired
 	private UserTicketService userTicketService;
+
+	@Autowired
+	private PanService panService;
 	
 	//第一信息
 	//用户名
@@ -76,6 +78,7 @@ public class UcService {
 		} else {// 用户还未注册
 			//注册
 			Customer entity = new Customer();
+			entity.setName(mobile);
 			entity.setMobile(mobile);
 			//entity.setPwd(Encode.MD5(pwd));
 			entity.setCreateTime(new Date());
@@ -86,6 +89,13 @@ public class UcService {
 				// 用户注册成功后，直接登录系统
 				SessionBag.createSession(request, Constant.USER_KEY, entity);
 				resp = Response.createBySuccess(userTicketService.createTicket(user.getId()));
+				//创建用户oss目录
+				try {
+					panService.createFolder(entity.getName() + "/");
+					log.info("用户：" + mobile + " oss目录创建成功！");
+				}catch (Exception e){
+					log.error("用户：" + mobile + " oss目录创建失败！，/n"+e);
+				}
 			}
 		}
 		return resp;

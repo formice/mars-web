@@ -4,8 +4,12 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.*;
+import com.formice.mars.web.common.Constant;
+import com.formice.mars.web.common.SessionBag;
 import com.formice.mars.web.component.oss.OssProvider;
+import com.formice.mars.web.dao.CustomerDao;
 import com.formice.mars.web.model.dto.PanFileDto;
+import com.formice.mars.web.model.entity.Customer;
 import com.formice.mars.web.tool.DateUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -19,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -27,6 +32,25 @@ public class PanService {
     private OSS ossClient;
     @Autowired
     private OssProvider ossProvider;
+    @Autowired
+    private CustomerDao customerDao;
+
+
+    /**
+     * 根目录只显示当前登录用户的目录，在注册的位置需要创建用户oss目录（目录名称取用户的name）
+     * @param folder
+     * @return
+     */
+    public Map<String, List<PanFileDto>> getRootDir(String folder){
+        Map<String, List<PanFileDto>> map = getFile(folder);
+        map.remove("Objects");
+        Customer c = customerDao.queryCustomerById(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
+        log.info(c+","+c.getName());
+        List<PanFileDto> list = map.get("CommonPrefixes");
+        list = list.stream().filter(s->s.getName().equals(c.getName())).collect(Collectors.toList());
+        map.put("CommonPrefixes",list);
+        return map;
+    }
 
     /**
      * 文件：文件+文件夹（在阿里oss文件夹是特殊的文件）

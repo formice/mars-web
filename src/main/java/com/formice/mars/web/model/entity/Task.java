@@ -7,8 +7,10 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class Task {
+public class Task extends BaseEntity{
     private Long id;
+
+    private Long userId;
 
     private String name;
 
@@ -20,26 +22,23 @@ public class Task {
 
     private Date endTime;
 
-    private Date createTime;
-
-    private Long createBy;
-
-    private Date updateTime;
-
-    private Long updateBy;
-
-    private Integer isDeleted;
-
-    public Task(Long id,Integer status,Date startTime,Date endTime){
+    public Task(Long id,Integer status,Date startTime,Date endTime,Long createBy){
         this.id = id;
         this.status = status;
         this.startTime = startTime;
         this.endTime = endTime;
+        super.setCreateBy(createBy);
     }
 
     public Task(Long id,Integer process){
         this.id = id;
         this.process = process;
+    }
+
+    public Task(Long userId,String name,Long createBy) {
+        this.userId = userId;
+        this.name = name;
+        super.setCreateBy(createBy);
     }
 
     public Task(String name) {

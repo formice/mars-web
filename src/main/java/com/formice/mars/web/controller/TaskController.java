@@ -1,7 +1,9 @@
 package com.formice.mars.web.controller;
 
 
+import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
+import com.formice.mars.web.common.SessionBag;
 import com.formice.mars.web.model.dto.TaskPageDto;
 import com.formice.mars.web.service.TaskService;
 import lombok.extern.log4j.Log4j2;
@@ -29,6 +31,7 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.POST,value = "/pagelist")
     public PageResponse getBasePageList(TaskPageDto dto){
         log.info(dto.getPageNum()+","+dto.getPageSize());
+        dto.setUserId(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         return taskService.getPageList(dto);
     }
 

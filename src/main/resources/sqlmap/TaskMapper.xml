@@ -3,6 +3,7 @@
 <mapper namespace="com.formice.mars.web.dao.TaskDao" >
   <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.Task" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="process" property="process" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="TINYINT" />
@@ -15,7 +16,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name,process, status,start_time,end_time, create_time, create_by, update_time, update_by, is_deleted
+    id, user_id,name,process, status,start_time,end_time, create_time, create_by, update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -40,6 +41,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="name != null" >
         name,
@@ -77,6 +81,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -175,6 +182,9 @@
     <if test="name != null">
       and name LIKE CONCAT('%',#{name},'%')
     </if>
+    <if test="userId != null">
+      and user_id = #{userId} or user_id = -88
+    </if>
     order by create_time desc
     limit #{start} , #{pageSize}
   </select>
@@ -186,6 +196,9 @@
     where 1=1
     <if test="name != null">
       and name LIKE CONCAT('%',#{name},'%')
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId} or user_id = -88
     </if>
 
   </select>

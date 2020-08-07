@@ -1,7 +1,5 @@
 package com.formice.mars.web.model.entity;
 
-import com.formice.mars.web.common.Constant;
-import com.formice.mars.web.common.SessionBag;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -40,8 +38,11 @@ public class BaseEntity implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public Long getCreateBy() {
+	/*public Long getCreateBy() {
 		return SessionBag.get(Constant.CURRENT_USER_ID,Long.class);
+	}*/
+	public Long getCreateBy() {
+		return createBy;
 	}
 
 	public void setCreateBy(Long createBy) {
