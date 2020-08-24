@@ -17,6 +17,7 @@ public class LoginConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/js/**", "/dist/images/**")//排除样式、脚本、图片等资源文件
                 .excludePathPatterns("/login")
+                .excludePathPatterns("/upload/**")
                 .excludePathPatterns("/sms/send/code")
                 .excludePathPatterns("/uc/**");
 

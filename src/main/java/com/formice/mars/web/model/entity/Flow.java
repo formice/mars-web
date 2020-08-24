@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class Flow extends BaseEntity{
+public class Flow extends SnowflakeIdEntity{
     private Long id;
 
     private Long userId;

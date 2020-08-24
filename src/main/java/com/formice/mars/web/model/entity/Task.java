@@ -7,8 +7,10 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class Task extends BaseEntity{
+public class Task extends SnowflakeIdEntity{
     private Long id;
+
+    private Long flowId;
 
     private Long userId;
 
@@ -35,7 +37,8 @@ public class Task extends BaseEntity{
         this.process = process;
     }
 
-    public Task(Long userId,String name,Long createBy) {
+    public Task(Long flowId,Long userId,String name,Long createBy) {
+        this.flowId = flowId;
         this.userId = userId;
         this.name = name;
         super.setCreateBy(createBy);

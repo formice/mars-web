@@ -3,6 +3,7 @@ package com.formice.mars.web.controller;
 
 import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
+import com.formice.mars.web.common.Response;
 import com.formice.mars.web.common.SessionBag;
 import com.formice.mars.web.model.dto.TaskPageDto;
 import com.formice.mars.web.service.TaskService;
@@ -33,6 +34,11 @@ public class TaskController {
         log.info(dto.getPageNum()+","+dto.getPageSize());
         dto.setUserId(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         return taskService.getPageList(dto);
+    }
+
+    @RequestMapping(method = RequestMethod.POST,value = "/result/path")
+    public Response getTaskResultPath(Long taskId){
+        return Response.createBySuccess(taskService.getTaskResultPath(taskId));
     }
 
 

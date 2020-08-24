@@ -5,15 +5,13 @@ import com.alibaba.fastjson.JSON;
 import com.formice.mars.web.common.Constant;
 import com.formice.mars.web.common.PageResponse;
 import com.formice.mars.web.common.SessionBag;
-import com.formice.mars.web.dao.FlowNodeDao;
-import com.formice.mars.web.dao.TaskDao;
-import com.formice.mars.web.dao.TaskRunDao;
+import com.formice.mars.web.dao.*;
 import com.formice.mars.web.model.dto.TaskPageDto;
 import com.formice.mars.web.model.dto.TaskRunDto;
-import com.formice.mars.web.model.entity.FlowNode;
-import com.formice.mars.web.model.entity.Task;
-import com.formice.mars.web.model.entity.TaskRun;
+import com.formice.mars.web.model.entity.*;
+import com.formice.mars.web.model.vo.TaskPageListVo;
 import com.formice.mars.web.tool.ShellUtils;
+import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,11 +36,20 @@ public class TaskService {
     @Autowired
     private ToolService toolService;
 
+    @Autowired
+    private ToolInputAndOutputDao toolInputAndOutputDao;
+
+    @Autowired
+    private PanService panService;
+
+    @Autowired
+    private CustomerDao customerDao;
+
    public void create(String json){
         TaskRunDto taskRunDto = JSON.parseObject(json, TaskRunDto.class);
         Long userId = SessionBag.get(Constant.CURRENT_USER_ID,Long.class);
         //生成task
-        Task t = new Task(userId,taskRunDto.getName(),userId);
+        Task t = new Task(taskRunDto.getFlowId(),userId,taskRunDto.getName(),userId);
         taskDao.insertSelective(t);
 
         /*//生成输入
@@ -117,14 +124,43 @@ public class TaskService {
             log.info("工具运行完成...");
         });*/
         log.info("任务结束...");
-        //任务结束运行，状态置：成功，结束时间：当前时间
+        //2.任务结束运行，状态置：成功，结束时间：当前时间
         taskDao.updateByPrimaryKeySelective(new Task(taskId,18,null,new Date(),userId));
+
+        //3.执行完后，上传结果文件到oss
+        FlowNode n = nodes.get(nodes.size()-1);
+        List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(n.getBusiId(),17));
+        Customer c = customerDao.queryCustomerById(userId);
+        outputs.forEach(o ->{
+            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, n.getBusiId(), 17, o.getId()));
+            panService.upload(t.getValue(),getTaskPath(flowId,taskId),c.getName()+File.separator+"result"+File.separator+flowId+File.separator+taskId+File.separator);
+        });
+
     }
 
     public PageResponse getPageList(TaskPageDto dto){
         List<Task> data = taskDao.queryEntityWithPage(dto);
         Integer count = taskDao.queryEntityWithPageCount(dto);
-        return PageResponse.createBySuccess(data,count);
+        List<TaskPageListVo> list = Lists.newArrayList();
+        data.forEach(d->{
+            list.add(new TaskPageListVo(String.valueOf(d.getId()),
+                    String.valueOf(d.getFlowId()),
+                    String.valueOf(d.getUserId()),
+                    d.getName(),
+                    d.getStatus(),
+                    d.getProcess(),
+                    d.getStartTime(),
+                    d.getEndTime()
+            ));
+        });
+        return PageResponse.createBySuccess(list,count);
+    }
+
+    public String getTaskResultPath(Long taskId){
+       Task t = taskDao.selectByPrimaryKey(taskId);
+       System.out.println("dd:"+taskId+","+t);
+       Customer c = customerDao.queryCustomerById(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
+       return c.getName()+File.separator+"result"+File.separator+t.getFlowId()+File.separator+taskId+File.separator;
     }
 
 }

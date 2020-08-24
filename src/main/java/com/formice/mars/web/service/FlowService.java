@@ -9,6 +9,9 @@ import com.formice.mars.web.dao.*;
 import com.formice.mars.web.model.dto.FlowJsonDto;
 import com.formice.mars.web.model.dto.FlowPageDto;
 import com.formice.mars.web.model.entity.*;
+import com.formice.mars.web.model.vo.FlowPageListVo;
+import com.formice.mars.web.tool.DateUtil;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,8 +68,17 @@ public class FlowService {
         System.out.println("当前userId:"+userId);
         flow.setUserId(userId);
         List<Flow> data = flowDao.queryEntityWithPage(flow);
+        List<FlowPageListVo> list = Lists.newArrayList();
+        data.forEach(d->{
+            list.add(new FlowPageListVo(String.valueOf(d.getId()),
+                    String.valueOf(d.getUserId()),
+                    d.getName(),
+                    d.getDesc(),
+                    DateUtil.dateToString(d.getCreateTime(),DateUtil.DATE_FORMAT_SECOND)
+                    ));
+        });
         Integer count = flowDao.queryEntityWithPageCount(flow);
-        return PageResponse.createBySuccess(data,count);
+        return PageResponse.createBySuccess(list,count);
     }
 
     public List<ToolInputAndOutput> getInputItem(Long flowId,Integer cate){
