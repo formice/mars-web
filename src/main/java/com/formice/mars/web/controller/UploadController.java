@@ -83,14 +83,14 @@ public class UploadController {
 
     @GetMapping("/download")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response,String folder) {
-        //String fileName = folder.split(File.separator)[folder.split(File.separator).length-1];
-        //Long taskId = Long.valueOf(folder.split(File.separator)[folder.split(File.separator).length-2]);
-        //Long flowId = Long.valueOf(folder.split(File.separator)[folder.split(File.separator).length-3]);
+        String fileName = folder.split(File.separator)[folder.split(File.separator).length-1];
+        Long taskId = Long.valueOf(folder.split(File.separator)[folder.split(File.separator).length-2]);
+        Long flowId = Long.valueOf(folder.split(File.separator)[folder.split(File.separator).length-3]);
         //1.下载OSS文件到本地
-        //String filePath = panService.download(folder,taskService.getTaskPath(flowId,taskId));
-        String fileName = "lombok-plugin-0.30-2020.1.jar";
-        String filePath = System.getProperty("user.dir") + File.separator+"download" + File.separator+fileName;
-        System.out.println("ddd1:"+filePath);
+        String filePath = panService.download(folder,taskService.getTaskPath(flowId,taskId));
+        //String fileName = "lombok-plugin-0.30-2020.1.jar";
+        //String filePath = System.getProperty("user.dir") + File.separator+"download" + File.separator+fileName;
+        //System.out.println("ddd1:"+filePath);
         //String fileName = "2019092715213111122.png";// 文件名
         if (filePath != null) {
             //设置文件路径

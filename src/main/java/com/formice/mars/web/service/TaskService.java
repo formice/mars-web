@@ -108,7 +108,8 @@ public class TaskService {
             ShellUtils.runShell(c);
             log.info("工具运行完成...");
             //更新task的process
-            int process = (i+1)*100/nodes.size();
+            //int process = (i+1)*100/nodes.size();
+            int process = (i+1)*100/(nodes.size()+1);
             taskDao.updateByPrimaryKeySelective(new Task(taskId,process));
         };
         /*nodes.forEach(n ->{
@@ -123,9 +124,7 @@ public class TaskService {
             ShellUtils.runShell(c);
             log.info("工具运行完成...");
         });*/
-        log.info("任务结束...");
-        //2.任务结束运行，状态置：成功，结束时间：当前时间
-        taskDao.updateByPrimaryKeySelective(new Task(taskId,18,null,new Date(),userId));
+
 
         //3.执行完后，上传结果文件到oss
         FlowNode n = nodes.get(nodes.size()-1);
@@ -133,8 +132,24 @@ public class TaskService {
         Customer c = customerDao.queryCustomerById(userId);
         outputs.forEach(o ->{
             TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, n.getBusiId(), 17, o.getId()));
-            panService.upload(t.getValue(),getTaskPath(flowId,taskId),c.getName()+File.separator+"result"+File.separator+flowId+File.separator+taskId+File.separator);
+            String ossFolder = c.getName()+File.separator+"result"+File.separator+flowId+File.separator+taskId+File.separator;
+            panService.createFolder(ossFolder);
+            String localFolder = getTaskPath(flowId,taskId);
+            //String localFolder = "/opt/webapps/upload/";
+            String fileName = t.getValue();
+            //String fileName = "SRR3226034_2.fastq.gz";
+            //ShellUtils.runShell("chmod 777 "+localFolder+fileName);
+            log.info("开始上传文件:"+fileName+","+localFolder+"-->"+ossFolder);
+            panService.upload(fileName,localFolder,ossFolder);
+            log.info("结束上传文件:"+fileName+","+localFolder+"-->"+ossFolder);
         });
+
+        int process = 100;
+        taskDao.updateByPrimaryKeySelective(new Task(taskId,process));
+
+        log.info("任务执行结束...");
+        //2.任务结束运行，状态置：成功，结束时间：当前时间
+        taskDao.updateByPrimaryKeySelective(new Task(taskId,18,null,new Date(),userId));
 
     }
 

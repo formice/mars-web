@@ -171,7 +171,7 @@ public class PanService {
         try {
             UploadFileRequest uploadFileRequest = new UploadFileRequest(ossProvider.getBucketName(), ossFolder+fileName);
             // The local file to upload---it must exist.
-            uploadFileRequest.setUploadFile(localFolder);
+            uploadFileRequest.setUploadFile(localFolder+fileName);
             // Sets the concurrent upload task number to 5.
             uploadFileRequest.setTaskNum(1);//5
             // Sets the part size to 1MB.
