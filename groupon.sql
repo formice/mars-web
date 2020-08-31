@@ -12,7 +12,7 @@ CREATE TABLE `tool` (
   `container_type` tinyint(4) DEFAULT NULL COMMENT '容器类型',
   `container_addr` varchar(200) DEFAULT NULL COMMENT '容器地址',
   `website` varchar(200) DEFAULT NULL COMMENT '主页',
-  `help` varchar(200) DEFAULT NULL COMMENT '使用帮助',
+  `help` varchar(1000) DEFAULT NULL COMMENT '使用帮助',
   `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_by` bigint(20) DEFAULT NULL,
   `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
