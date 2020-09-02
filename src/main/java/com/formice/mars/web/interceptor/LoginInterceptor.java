@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
@@ -32,6 +33,16 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (isEffectiveTicket) {
             //设置当前userId
             SessionBag.set(Constant.CURRENT_USER_ID, ut.getUserId());
+            //ticket续命
+            new Thread(()-> {
+                try {
+                    ut.setExpireTime(new Date().getTime()+30*60*1000);
+                    userTicketService.updateExpireTimeByUserIdAndTicket(ut);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            ).start();
             return true;
         } else {
             response.sendRedirect("/uc/login/redirect");

@@ -40,4 +40,18 @@
 		and ticket = #{ticket}
 	</update>
 
+	<update id="updateExpireTimeByUserIdAndTicket" parameterType="com.formice.mars.web.model.entity.UserTicket">
+		update user_ticket
+		<set>
+			<if test="expireDis != null">
+				expire_dis = #{expireDis},
+			</if>
+			<if test="expireTime != null">
+				expire_time = #{expireTime},
+			</if>
+		</set>
+		where user_id = #{userId}
+		and ticket = #{ticket}
+	</update>
+
 </mapper>

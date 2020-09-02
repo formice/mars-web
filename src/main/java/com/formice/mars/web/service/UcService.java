@@ -7,6 +7,7 @@ import com.formice.mars.web.dao.CustomerDao;
 import com.formice.mars.web.dao.SmsDao;
 import com.formice.mars.web.model.entity.Customer;
 import com.formice.mars.web.model.entity.Sms;
+import com.formice.mars.web.model.entity.UserTicket;
 import com.formice.mars.web.model.enums.ResponseCode;
 import com.formice.mars.web.tool.Encode;
 import lombok.extern.log4j.Log4j2;
@@ -264,6 +265,19 @@ public class UcService {
         }    
         return sb1.toString();    
     }
+
+	public boolean logout(HttpServletRequest request) {
+		boolean isSuccess = false;
+		String ticket =  request.getHeader("ticket");
+		System.out.println("ticket:"+ticket);
+		UserTicket ut = userTicketService.queryUserTicketByTicket(ticket);
+		ut.setExpireTime(-1L);
+		int n = userTicketService.updateExpireTimeByUserIdAndTicket(ut);
+		if(n == 1){
+			isSuccess = true;
+		}
+		return isSuccess;
+	}
 	
 	
 }

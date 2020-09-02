@@ -22,4 +22,11 @@ public class UserTicket {
 	private Date updateTime;
 	private Long updateBy;
 	private Integer isDeleted;
+
+	public UserTicket(Long userId,String ticket,Long expireDis,Long expireTime){
+		this.userId = userId;
+		this.ticket = ticket;
+		this.expireDis = expireDis;
+		this.expireTime = expireTime;
+	}
 }

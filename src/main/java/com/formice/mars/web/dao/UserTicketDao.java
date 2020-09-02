@@ -10,4 +10,6 @@ public interface UserTicketDao {
 	public UserTicket queryUserTicketByTicket(Map<String,Object> params);
 	
 	public int delUserTicketByUserIdAndTicket(Map<String,Object> params);
+
+	public int updateExpireTimeByUserIdAndTicket(UserTicket userTicket);
 }

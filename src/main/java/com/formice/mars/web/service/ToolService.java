@@ -137,6 +137,9 @@ public class ToolService {
             tv.setId(t.getId());
             tv.setUserId(t.getUserId());
             tv.setName(t.getName());
+            if(t.getCate() != null) {
+                tv.setCate(dicService.queryById(new Long(t.getCate())).getName());
+            }
             tv.setType(dicService.queryById(new Long(t.getType())).getName());
             tv.setHelp(t.getHelp());
             tv.setWebsite(t.getWebsite());

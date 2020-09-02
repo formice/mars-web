@@ -83,4 +83,8 @@ public class UserTicketService {
 		return true;
 	}
 
+	public int updateExpireTimeByUserIdAndTicket(UserTicket ut){
+		return userTicketDao.updateExpireTimeByUserIdAndTicket(ut);
+	}
+
 }

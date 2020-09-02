@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -80,6 +81,16 @@ public class UcController{
 	@RequestMapping(value="/register")
 	public @ResponseBody Response register(HttpServletRequest request, String account, String pwd, String verifCode){
 		return ucService.register(account, pwd,verifCode,request);
+	}
+
+	@RequestMapping(method = RequestMethod.POST,value="/logout")
+	public Response  logout(HttpServletRequest request){
+		Response resp = Response.createByError();
+		boolean isSuccess = ucService.logout(request);
+		if(isSuccess){
+			resp = Response.createBySuccess();
+		}
+		return resp;
 	}
 
 }
