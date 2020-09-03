@@ -13,6 +13,10 @@ public class ToolPageListVo {
 
     private String name;
 
+    private String desc;
+
+    private String dockerImageUrl;
+
     private String cate;
 
     private String type;

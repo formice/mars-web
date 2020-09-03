@@ -6,7 +6,9 @@ DROP TABLE IF EXISTS `tool`;
 CREATE TABLE `tool` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '用户Id',
-  `name` varchar(200) NOT NULL,
+  `name` varchar(200) NOT NULL COMMENT '名称',
+  `desc` varchar(1000) DEFAULT NULL COMMENT '名称',
+  `docker_image_url` varchar(200) NOT NULL COMMENT 'docker镜像url',
   `type` tinyint(4) DEFAULT NULL COMMENT '工具类型 ',
   `cate` tinyint(4) DEFAULT NULL COMMENT '工具分类',
   `container_type` tinyint(4) DEFAULT NULL COMMENT '容器类型',

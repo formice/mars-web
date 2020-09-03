@@ -53,6 +53,10 @@ public class ToolService {
         return tool.getId();
     }
 
+    public Tool getTool(Long id){
+        return toolDao.selectByPrimaryKey(id);
+    }
+
 
     public void addToolInputAndOutput(ToolInputAndOutput toolInputAndOutput){
         toolInputAndOutputDao.insertSelective(toolInputAndOutput);
@@ -136,6 +140,8 @@ public class ToolService {
             ToolPageListVo tv = new ToolPageListVo();
             tv.setId(t.getId());
             tv.setUserId(t.getUserId());
+            tv.setDesc(t.getDesc());
+            tv.setDockerImageUrl(t.getDockerImageUrl());
             tv.setName(t.getName());
             if(t.getCate() != null) {
                 tv.setCate(dicService.queryById(new Long(t.getCate())).getName());

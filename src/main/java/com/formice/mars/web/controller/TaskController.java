@@ -38,7 +38,8 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/result/path")
     public Response getTaskResultPath(Long taskId){
-        return Response.createBySuccess(taskService.getTaskResultPath(taskId));
+        Long userId = SessionBag.get(Constant.CURRENT_USER_ID,Long.class);
+        return Response.createBySuccess(taskService.getTaskResultPath(userId,taskId));
     }
 
 

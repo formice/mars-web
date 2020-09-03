@@ -12,6 +12,10 @@ public class Tool extends BaseEntity{
 
     private String name;
 
+    private String desc;
+
+    private String dockerImageUrl;
+
     private Integer cate;
 
     private Integer type;

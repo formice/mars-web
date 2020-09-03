@@ -83,7 +83,8 @@ public class TaskService {
     }
 
     public String getTaskPath(Long flowId,Long taskId){
-       return Constant.TASK_ROOT_PATH+flowId+ File.separator+taskId+File.separator;
+       //return Constant.TASK_ROOT_PATH+flowId+ File.separator+taskId+File.separator;
+        return Constant.TASK_ROOT_PATH+"T_"+flowId+"_"+taskId+File.separator;
     }
 
     public void start(Long flowId,Long taskId,Long userId) throws Exception {
@@ -102,10 +103,27 @@ public class TaskService {
         //Stream.iterate(0, i -> i + 1).limit(nodes.size()).forEach(i -> {
         for(int i = 0; i < nodes.size(); i++){
             FlowNode n = nodes.get(i);
+            //构建工具执行命令
             String command = toolService.buildRunCommand(flowId, taskId, n.getBusiId(),path);
-            String c = command.replaceAll("&nbsp;"," ");
-            log.info("开始运行工具："+c);
-            ShellUtils.runShell(c);
+            command = command.replaceAll("&nbsp;"," ");
+            //构建docker命令
+            //"docker run -v  /opt/docker/share:/tmp ncbi-blast:2.10.1 "
+            Tool t = toolService.getTool(n.getBusiId());
+            StringBuffer sb = new StringBuffer();
+            sb.append(" docker run -v ");
+            sb.append(path);
+            sb.append(":");
+            sb.append(path);
+            String imageId = t.getDockerImageUrl().split("/")[t.getDockerImageUrl().split("/").length-1];
+            sb.append(" "+imageId+" ");
+            sb.append(command);
+            //下载docker镜像
+            log.info("开始下载镜像："+t.getDockerImageUrl());
+            ShellUtils.runShell("docker pull "+t.getDockerImageUrl());
+            log.info("镜像下载完成："+t.getDockerImageUrl());
+            //通过docker运行工具
+            log.info("开始运行工具："+sb.toString());
+            ShellUtils.runShell(sb.toString());
             log.info("工具运行完成...");
             //更新task的process
             //int process = (i+1)*100/nodes.size();
@@ -132,7 +150,8 @@ public class TaskService {
         Customer c = customerDao.queryCustomerById(userId);
         outputs.forEach(o ->{
             TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, n.getBusiId(), 17, o.getId()));
-            String ossFolder = c.getName()+File.separator+"result"+File.separator+flowId+File.separator+taskId+File.separator;
+            //String ossFolder = c.getName()+File.separator+"result"+File.separator+flowId+File.separator+taskId+File.separator;
+            String ossFolder = getTaskResultPath(userId,taskId);
             panService.createFolder(ossFolder);
             String localFolder = getTaskPath(flowId,taskId);
             //String localFolder = "/opt/webapps/upload/";
@@ -171,11 +190,14 @@ public class TaskService {
         return PageResponse.createBySuccess(list,count);
     }
 
-    public String getTaskResultPath(Long taskId){
+    //public String
+
+    public String getTaskResultPath(Long userId,Long taskId){
        Task t = taskDao.selectByPrimaryKey(taskId);
        System.out.println("dd:"+taskId+","+t);
-       Customer c = customerDao.queryCustomerById(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
-       return c.getName()+File.separator+"result"+File.separator+t.getFlowId()+File.separator+taskId+File.separator;
+       Customer c = customerDao.queryCustomerById(userId);
+       //return c.getName()+File.separator+"result"+File.separator+t.getFlowId()+File.separator+taskId+File.separator;
+        return c.getName()+File.separator+"task"+File.separator+"T_"+t.getFlowId()+"_"+taskId+File.separator;
     }
 
 }

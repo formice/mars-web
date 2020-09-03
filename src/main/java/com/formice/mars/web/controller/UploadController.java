@@ -83,9 +83,11 @@ public class UploadController {
 
     @GetMapping("/download")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response,String folder) {
+        //18986127077/task/T_123172312903192576_124258888307576832/MT.txt
         String fileName = folder.split(File.separator)[folder.split(File.separator).length-1];
-        Long taskId = Long.valueOf(folder.split(File.separator)[folder.split(File.separator).length-2]);
-        Long flowId = Long.valueOf(folder.split(File.separator)[folder.split(File.separator).length-3]);
+        String taskStr = folder.split(File.separator)[folder.split(File.separator).length-2];
+        Long taskId = Long.valueOf(taskStr.split("_")[taskStr.split("_").length-1]);
+        Long flowId = Long.valueOf(taskStr.split("_")[taskStr.split("_").length-2]);
         //1.下载OSS文件到本地
         String filePath = panService.download(folder,taskService.getTaskPath(flowId,taskId));
         //String fileName = "lombok-plugin-0.30-2020.1.jar";
