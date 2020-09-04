@@ -39,6 +39,8 @@ public class FlowService {
     private ToolParameterDao toolParameterDao;
     @Autowired
     private FlowNodeParamDao flowNodeParamDao;
+    @Autowired
+    private DicService dicService;
 
 
 
@@ -74,6 +76,7 @@ public class FlowService {
                     String.valueOf(d.getUserId()),
                     d.getName(),
                     d.getDesc(),
+                    dicService.queryById(new Long(d.getCate())).getName(),
                     DateUtil.dateToString(d.getCreateTime(),DateUtil.DATE_FORMAT_SECOND)
                     ));
         });

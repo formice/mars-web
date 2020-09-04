@@ -47,7 +47,7 @@ public class PanService {
         Customer c = customerDao.queryCustomerById(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         log.info(c+","+c.getName());
         List<PanFileDto> list = map.get("CommonPrefixes");
-        list = list.stream().filter(s->s.getName().equals(c.getName())).collect(Collectors.toList());
+        list = list.stream().filter(s->s.getName().equals(c.getName()) || s.getName().equals("public")).collect(Collectors.toList());
         map.put("CommonPrefixes",list);
         return map;
     }

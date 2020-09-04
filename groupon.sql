@@ -89,6 +89,7 @@ CREATE TABLE `flow` (
   `user_id` bigint(20) NOT NULL COMMENT '用户Id',
   `name` varchar(200) NOT NULL COMMENT '名称',
   `desc` varchar(200) DEFAULT NULL COMMENT '描述',
+  `cate` tinyint(4) DEFAULT 38 COMMENT '工作流分类 见dic表 flow_cate',
   `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_by` bigint(20) DEFAULT NULL,
   `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -246,3 +247,7 @@ INSERT INTO `dic` VALUES (null,'33', '注释工具','', 'tool_type', null, null,
 INSERT INTO `dic` VALUES (null,'34', '突变查找工具','', 'tool_type', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'35', '格式转换工具','', 'tool_type', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'36', '其它工具','', 'tool_type', null, null, null, null, 0);
+
+
+INSERT INTO `dic` VALUES (null,'37', '公共工作流','', 'flow_cate', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'38', '私有工作流','', 'flow_cate', null, null, null, null, 0);

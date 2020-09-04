@@ -14,6 +14,8 @@ public class Flow extends SnowflakeIdEntity{
 
     private String desc;
 
+    private Integer cate;
+
     public Flow(String name, String desc) {
         this.name = name;
         this.desc = desc;

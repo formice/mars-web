@@ -16,6 +16,8 @@ public class FlowPageListVo{
 
     private String desc;
 
+    private String cate;
+
     private String createTime;
 
 }
