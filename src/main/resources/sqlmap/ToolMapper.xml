@@ -225,7 +225,7 @@
       and type = #{type}
     </if>
     <if test="userId != null">
-      and user_id = #{userId} or user_id = -88
+      and (user_id = #{userId} or user_id = -88)
     </if>
     order by create_time desc
     limit #{start} , #{pageSize}
@@ -243,7 +243,7 @@
       and type = #{type,jdbcType=TINYINT}
     </if>
     <if test="userId != null">
-      and user_id = #{userId} or user_id = -88
+      and (user_id = #{userId} or user_id = -88)
     </if>
 
   </select>
