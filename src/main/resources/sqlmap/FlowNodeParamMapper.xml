@@ -5,8 +5,12 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="flow_id" property="flowId" jdbcType="BIGINT" />
     <result column="tool_id" property="toolId" jdbcType="BIGINT" />
+    <result column="busi_type" property="busiType" jdbcType="TINYINT" />
     <result column="busi_id" property="busiId" jdbcType="BIGINT" />
     <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="rela_tool_id" property="relaToolId" jdbcType="BIGINT" />
+    <result column="rela_busi_type" property="relaBusiType" jdbcType="TINYINT" />
+    <result column="rela_busi_id" property="relaBusiId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="create_by" property="createBy" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -14,7 +18,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, flow_id, tool_id, busi_id, `value`, create_time, create_by, update_time, update_by,
+    id, flow_id, tool_id,busi_type, busi_id, `value`,rela_tool_id, rela_busi_type,rela_busi_id,create_time, create_by, update_time, update_by,
     is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -28,12 +32,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.FlowNodeParam" >
-    insert into flow_node_param (id, flow_id, tool_id, 
-      busi_id, value, create_time, 
+    insert into flow_node_param (id, flow_id, tool_id, busi_type,
+      busi_id, value, rela_tool_id,rela_busi_type,rela_busi_id,create_time,
       create_by, update_time, update_by, 
       is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{toolId,jdbcType=BIGINT}, 
-      #{busiId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{toolId,jdbcType=BIGINT}, #{busiType,jdbcType=TINYINT},
+      #{busiId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR},
+      #{relaToolId,jdbcType=BIGINT}, #{relaBusiType,jdbcType=TINYINT},#{relaBusiId,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP},
       #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, 
       #{isDeleted,jdbcType=TINYINT})
   </insert>
@@ -49,11 +55,23 @@
       <if test="toolId != null" >
         tool_id,
       </if>
+      <if test="busiType != null" >
+        busi_type,
+      </if>
       <if test="busiId != null" >
         busi_id,
       </if>
       <if test="value != null" >
         `value`,
+      </if>
+      <if test="relaToolId != null" >
+        rela_tool_id,
+      </if>
+      <if test="relaBusiType != null" >
+        rela_busi_type,
+      </if>
+      <if test="relaBusiId != null" >
+        rela_busi_id,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -81,11 +99,23 @@
       <if test="toolId != null" >
         #{toolId,jdbcType=BIGINT},
       </if>
+      <if test="busiType != null" >
+        #{busiType,jdbcType=TINYINT},
+      </if>
       <if test="busiId != null" >
         #{busiId,jdbcType=BIGINT},
       </if>
       <if test="value != null" >
         #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="relaToolId != null" >
+        #{relaToolId,jdbcType=BIGINT},
+      </if>
+      <if test="relaBusiType != null" >
+        #{relaBusiType,jdbcType=TINYINT},
+      </if>
+      <if test="relaBusiId != null" >
+        #{relaBusiId,jdbcType=BIGINT},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -113,12 +143,26 @@
       <if test="toolId != null" >
         tool_id = #{toolId,jdbcType=BIGINT},
       </if>
+      <if test="busiType != null" >
+        busi_type = #{busiType,jdbcType=TINYINT},
+      </if>
       <if test="busiId != null" >
         busi_id = #{busiId,jdbcType=BIGINT},
       </if>
       <if test="value != null" >
         value = #{value,jdbcType=VARCHAR},
       </if>
+
+      <if test="relaToolId != null" >
+        rela_tool_id = #{relaToolId,jdbcType=BIGINT},
+      </if>
+      <if test="relaBusiType != null" >
+        rela_busi_type = #{relaBusiType,jdbcType=TINYINT},
+      </if>
+      <if test="relaBusiId != null" >
+        rela_busi_id = #{relaBusiId,jdbcType=BIGINT},
+      </if>
+
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>

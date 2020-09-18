@@ -95,6 +95,16 @@ public class ToolController {
         return Response.createBySuccess(toolService.getParameters(toolId));
     }
 
+    @RequestMapping(method = RequestMethod.POST,value = "/input/list")
+    public Response getInputList(Long toolId) throws Exception {
+        return Response.createBySuccess(toolService.getInputOrOutputList(toolId,16));
+    }
+
+    @RequestMapping(method = RequestMethod.POST,value = "/output/list")
+    public Response getOutputList(Long toolId) throws Exception {
+        return Response.createBySuccess(toolService.getInputOrOutputList(toolId,17));
+    }
+
     /**
      @RequestMapping(method = RequestMethod.GET,value = "/delete/{id}")
      public void delete(@PathVariable("id")int id){
