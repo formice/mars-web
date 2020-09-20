@@ -16,10 +16,7 @@ import com.formice.mars.web.model.entity.ToolTemplate;
 import com.formice.mars.web.service.TaskService;
 import com.formice.mars.web.service.ToolService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:63342", maxAge = 3600)
 @RestController
@@ -103,6 +100,11 @@ public class ToolController {
     @RequestMapping(method = RequestMethod.POST,value = "/output/list")
     public Response getOutputList(Long toolId) throws Exception {
         return Response.createBySuccess(toolService.getInputOrOutputList(toolId,17));
+    }
+
+    @RequestMapping(method = RequestMethod.POST,value = "/{id}")
+    public Response getTool(@PathVariable("id")Long id) throws Exception {
+        return Response.createBySuccess(toolService.getTool(id));
     }
 
     /**

@@ -114,11 +114,11 @@ public class TaskService {
             sb.append(path);
             sb.append(":");
             sb.append(path);
-            sb.append(" --log-driver syslog ");
+            //sb.append(" --log-driver syslog ");
             String imageId = t.getDockerImageUrl().split("/")[t.getDockerImageUrl().split("/").length-1];
             sb.append(" "+imageId+" ");
             sb.append(command);
-            sb.append(" > "+path+"run.log 2>&1 ");
+            //sb.append(" > "+path+"run.log 2>&1 ");
             //下载docker镜像
             log.info("开始下载镜像："+t.getDockerImageUrl());
             ShellUtils.runShell("docker pull "+t.getDockerImageUrl());
