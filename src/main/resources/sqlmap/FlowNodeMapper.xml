@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="flow_id" property="flowId" jdbcType="BIGINT" />
     <result column="busi_id" property="busiId" jdbcType="BIGINT" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="create_by" property="createBy" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -12,7 +13,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, flow_id, busi_id, create_time, create_by, update_time, update_by, is_deleted
+    id, flow_id, busi_id,alias, create_time, create_by, update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -25,10 +26,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.FlowNode" >
-    insert into flow_node (id, flow_id, busi_id, 
+    insert into flow_node (id, flow_id, busi_id, alias,
       create_time, create_by, update_time, 
       update_by, is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{busiId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{busiId,jdbcType=BIGINT}, #{alias,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT})
   </insert>
@@ -43,6 +44,9 @@
       </if>
       <if test="busiId != null" >
         busi_id,
+      </if>
+      <if test="alias != null" >
+        alias,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -70,6 +74,9 @@
       <if test="busiId != null" >
         #{busiId,jdbcType=BIGINT},
       </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -96,6 +103,9 @@
       <if test="busiId != null" >
         busi_id = #{busiId,jdbcType=BIGINT},
       </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -118,6 +128,7 @@
     update flow_node
     set flow_id = #{flowId,jdbcType=BIGINT},
       busi_id = #{busiId,jdbcType=BIGINT},
+      alias = #{alias,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

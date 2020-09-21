@@ -1,14 +1,20 @@
 package com.formice.mars.web.model.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class Node {
 
     private String nodeId;
+    private String alias;
     private int blockX;
     private int blockY;
     private int width;
     private int height;
 
-    public String getNodeId() {
+    /*public String getNodeId() {
         return nodeId;
     }
 
@@ -46,5 +52,5 @@ public class Node {
 
     public void setHeight(int height) {
         this.height = height;
-    }
+    }*/
 }

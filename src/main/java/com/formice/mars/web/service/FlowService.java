@@ -51,7 +51,7 @@ public class FlowService {
         //f.setCreateBy(SessionBag.get(Constant.CURRENT_USER_ID,Long.class));
         flowDao.insertSelective(f);
         flowJsonDto.getNodes().forEach(n ->{
-            FlowNode node = new FlowNode(f.getId(),Long.valueOf(n.getNodeId().split("-")[1]));
+            FlowNode node = new FlowNode(f.getId(),Long.valueOf(n.getNodeId().split("-")[1]),n.getAlias());
             flowNodeDao.insertSelective(node);
         });
         flowJsonDto.getLines().forEach(l ->{

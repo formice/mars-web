@@ -12,12 +12,15 @@ public class FlowNode extends BaseEntity{
 
     private Long busiId;
 
+    private String alias;
+
     public FlowNode(Long flowId) {
         this.flowId = flowId;
     }
 
-    public FlowNode(Long flowId, Long busiId) {
+    public FlowNode(Long flowId, Long busiId,String alias) {
         this.flowId = flowId;
         this.busiId = busiId;
+        this.alias = alias;
     }
 }
