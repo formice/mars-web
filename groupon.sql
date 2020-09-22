@@ -100,9 +100,10 @@ CREATE TABLE `flow` (
 
 CREATE TABLE `flow_node` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(100) NOT NULL COMMENT '节点的uuid',
   `flow_id` bigint(20) NOT NULL COMMENT '所属工作流ID',
   `busi_id` bigint(20) NOT NULL COMMENT '业务ID，此处是toolId',
-  `alias` varchar(200) DEFAULT NULL COMMENT '节点别名，可以动态定义工作流上的工具显示名称',
+  `alias` varchar(200) NOT NULL COMMENT '节点别名，可以动态定义工作流上的工具显示名称',
   `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_by` bigint(20) DEFAULT NULL,
   `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -127,9 +128,15 @@ CREATE TABLE `flow_line` (
 CREATE TABLE `flow_node_param` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `flow_id` bigint(20) NOT NULL COMMENT '所属工作流ID',
+  `node_id` bigint(20) NOT NULL COMMENT '节点ID',
   `tool_id` bigint(20) NOT NULL COMMENT '工具ID',
+  `busi_type` tinyint(4) NOT NULL COMMENT '业务类型',
   `busi_id` bigint(20) NOT NULL COMMENT '业务ID',
    `value` varchar(200) DEFAULT NULL COMMENT '用户输入的值',
+  `rela_node_id` bigint(20) DEFAULT NULL COMMENT '关联节点ID',
+  `rela_tool_id` bigint(20) DEFAULT NULL COMMENT '关联工具ID',
+  `rela_busi_type` tinyint(4) DEFAULT NULL COMMENT '关联业务类型',
+  `rela_busi_id` bigint(20) DEFAULT NULL COMMENT '关联业务ID',
   `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_by` bigint(20) DEFAULT NULL,
   `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',

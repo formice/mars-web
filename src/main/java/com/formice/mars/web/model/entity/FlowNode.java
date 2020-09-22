@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 public class FlowNode extends BaseEntity{
     private Long id;
 
+    private String uuid;
+
     private Long flowId;
 
     private Long busiId;
@@ -18,7 +20,8 @@ public class FlowNode extends BaseEntity{
         this.flowId = flowId;
     }
 
-    public FlowNode(Long flowId, Long busiId,String alias) {
+    public FlowNode(String uuid,Long flowId, Long busiId,String alias) {
+        this.uuid = uuid;
         this.flowId = flowId;
         this.busiId = busiId;
         this.alias = alias;

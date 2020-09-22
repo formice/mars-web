@@ -3,6 +3,7 @@
 <mapper namespace="com.formice.mars.web.dao.FlowNodeDao" >
   <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.FlowNode" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
     <result column="flow_id" property="flowId" jdbcType="BIGINT" />
     <result column="busi_id" property="busiId" jdbcType="BIGINT" />
     <result column="alias" property="alias" jdbcType="VARCHAR" />
@@ -13,7 +14,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, flow_id, busi_id,alias, create_time, create_by, update_time, update_by, is_deleted
+    id,uuid, flow_id, busi_id,alias, create_time, create_by, update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -26,10 +27,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.FlowNode" >
-    insert into flow_node (id, flow_id, busi_id, alias,
+    insert into flow_node (id,uuid, flow_id, busi_id, alias,
       create_time, create_by, update_time, 
       update_by, is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{busiId,jdbcType=BIGINT}, #{alias,jdbcType=VARCHAR},
+    values (#{id,jdbcType=BIGINT},#{uuid,jdbcType=VARCHAR}, #{flowId,jdbcType=BIGINT}, #{busiId,jdbcType=BIGINT}, #{alias,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT})
   </insert>
@@ -38,6 +39,9 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="uuid != null" >
+        uuid,
       </if>
       <if test="flowId != null" >
         flow_id,
@@ -68,6 +72,9 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
       <if test="flowId != null" >
         #{flowId,jdbcType=BIGINT},
       </if>
@@ -97,6 +104,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.formice.mars.web.model.entity.FlowNode" >
     update flow_node
     <set >
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
       <if test="flowId != null" >
         flow_id = #{flowId,jdbcType=BIGINT},
       </if>
@@ -126,7 +136,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.formice.mars.web.model.entity.FlowNode" >
     update flow_node
-    set flow_id = #{flowId,jdbcType=BIGINT},
+    set
+      uuid = #{uuid,jdbcType=VARCHAR},
+      flow_id = #{flowId,jdbcType=BIGINT},
       busi_id = #{busiId,jdbcType=BIGINT},
       alias = #{alias,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

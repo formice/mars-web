@@ -4,10 +4,12 @@
   <resultMap id="BaseResultMap" type="com.formice.mars.web.model.entity.FlowNodeParam" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="flow_id" property="flowId" jdbcType="BIGINT" />
+    <result column="node_id" property="nodeId" jdbcType="BIGINT" />
     <result column="tool_id" property="toolId" jdbcType="BIGINT" />
     <result column="busi_type" property="busiType" jdbcType="TINYINT" />
     <result column="busi_id" property="busiId" jdbcType="BIGINT" />
     <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="rela_node_id" property="relaNodeId" jdbcType="BIGINT" />
     <result column="rela_tool_id" property="relaToolId" jdbcType="BIGINT" />
     <result column="rela_busi_type" property="relaBusiType" jdbcType="TINYINT" />
     <result column="rela_busi_id" property="relaBusiId" jdbcType="BIGINT" />
@@ -18,7 +20,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, flow_id, tool_id,busi_type, busi_id, `value`,rela_tool_id, rela_busi_type,rela_busi_id,create_time, create_by, update_time, update_by,
+    id, flow_id,node_id, tool_id,busi_type, busi_id, `value`,rela_node_id,rela_tool_id, rela_busi_type,rela_busi_id,create_time, create_by, update_time, update_by,
     is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -32,12 +34,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.FlowNodeParam" >
-    insert into flow_node_param (id, flow_id, tool_id, busi_type,
-      busi_id, value, rela_tool_id,rela_busi_type,rela_busi_id,create_time,
+    insert into flow_node_param (id, flow_id,node_id, tool_id, busi_type,
+      busi_id, value, rela_node_id,rela_tool_id,rela_busi_type,rela_busi_id,create_time,
       create_by, update_time, update_by, 
       is_deleted)
-    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{toolId,jdbcType=BIGINT}, #{busiType,jdbcType=TINYINT},
-      #{busiId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR},
+    values (#{id,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT},#{nodeId,jdbcType=BIGINT}, #{toolId,jdbcType=BIGINT}, #{busiType,jdbcType=TINYINT},
+      #{busiId,jdbcType=BIGINT}, #{value,jdbcType=VARCHAR},#{relaNodeId,jdbcType=BIGINT},
       #{relaToolId,jdbcType=BIGINT}, #{relaBusiType,jdbcType=TINYINT},#{relaBusiId,jdbcType=BIGINT},
       #{createTime,jdbcType=TIMESTAMP},
       #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, 
@@ -52,6 +54,9 @@
       <if test="flowId != null" >
         flow_id,
       </if>
+      <if test="nodeId != null" >
+        node_id,
+      </if>
       <if test="toolId != null" >
         tool_id,
       </if>
@@ -63,6 +68,9 @@
       </if>
       <if test="value != null" >
         `value`,
+      </if>
+      <if test="relaNodeId != null" >
+        rela_node_id,
       </if>
       <if test="relaToolId != null" >
         rela_tool_id,
@@ -96,6 +104,9 @@
       <if test="flowId != null" >
         #{flowId,jdbcType=BIGINT},
       </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=BIGINT},
+      </if>
       <if test="toolId != null" >
         #{toolId,jdbcType=BIGINT},
       </if>
@@ -107,6 +118,9 @@
       </if>
       <if test="value != null" >
         #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="relaNodeId != null" >
+        #{relaNodeId,jdbcType=BIGINT},
       </if>
       <if test="relaToolId != null" >
         #{relaToolId,jdbcType=BIGINT},
@@ -140,6 +154,9 @@
       <if test="flowId != null" >
         flow_id = #{flowId,jdbcType=BIGINT},
       </if>
+      <if test="nodeId != null" >
+        node_id = #{nodeId,jdbcType=BIGINT},
+      </if>
       <if test="toolId != null" >
         tool_id = #{toolId,jdbcType=BIGINT},
       </if>
@@ -152,7 +169,9 @@
       <if test="value != null" >
         value = #{value,jdbcType=VARCHAR},
       </if>
-
+      <if test="relaNodeId != null" >
+        rela_node_id = #{relaNodeId,jdbcType=BIGINT},
+      </if>
       <if test="relaToolId != null" >
         rela_tool_id = #{relaToolId,jdbcType=BIGINT},
       </if>

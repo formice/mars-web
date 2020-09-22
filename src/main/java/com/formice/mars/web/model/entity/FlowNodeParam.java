@@ -10,6 +10,8 @@ public class FlowNodeParam extends BaseEntity{
 
     private Long flowId;
 
+    private Long nodeId;
+
     private Long toolId;
 
     private Integer busiType;
@@ -17,6 +19,8 @@ public class FlowNodeParam extends BaseEntity{
     private Long busiId;
 
     private String value;
+
+    private Long relaNodeId;
 
     private Long relaToolId;
 
