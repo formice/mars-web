@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -61,6 +62,14 @@ public class FlowService {
 
         flowJsonDto.getParams().forEach(p ->{
             FlowNodeParam param = new FlowNodeParam(f.getId(),p.getToolId(),p.getId(),p.getValue());
+            flowNodeParamDao.insertSelective(param);
+        });
+        flowJsonDto.getRelas().forEach(r ->{
+            //uuid 转 nodeId
+            FlowNode node = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),r.getUuid(),r.getBusiId()));
+            //relaUuid 转 relaNodeId
+            FlowNode relaNode = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),r.getRelaUuid(),r.getRelaBusiId()));
+            FlowNodeParam param = new FlowNodeParam(f.getId(),node.getId(),r.getToolId(),16,r.getBusiId(),relaNode.getId(),r.getRelaToolId(),17,r.getRelaBusiId());
             flowNodeParamDao.insertSelective(param);
         });
     }
@@ -177,6 +186,12 @@ public class FlowService {
             result.put(toolId+"@*-*@"+toolName,map);
         });
         return result;
+    }
+
+    public List<FlowNode> getFlowInput(Long flowId){
+        List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
+        //过滤出import_data 节点，作为输入项
+        return nodes.stream().filter(n -> n.getBusiId() == 295).collect(Collectors.toList());
     }
 
 

@@ -2,6 +2,8 @@
   * Copyright 2020 bejson.com 
   */
 package com.formice.mars.web.model.dto;
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -10,14 +12,16 @@ import java.util.List;
  * @author bejson.com (i@bejson.com)
  * @website http://www.bejson.com/java2pojo/
  */
+@Data
 public class FlowJsonDto {
     private String name;
     private String desc;
     private List<Line> lines;
     private List<Node> nodes;
     private List<FlowNodeParamDto> params;
+    private List<FlowNodeParamDto> relas;
 
-    public String getName() {
+    /*public String getName() {
         return name;
     }
 
@@ -55,7 +59,7 @@ public class FlowJsonDto {
 
     public void setParams(List<FlowNodeParamDto> params) {
         this.params = params;
-    }
+    }*/
 }
 
 

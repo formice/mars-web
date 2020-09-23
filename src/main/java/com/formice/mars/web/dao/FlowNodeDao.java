@@ -1,5 +1,6 @@
 package com.formice.mars.web.dao;
 
+import com.formice.mars.web.model.entity.Flow;
 import com.formice.mars.web.model.entity.FlowNode;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface FlowNodeDao {
     int updateByPrimaryKey(FlowNode record);
 
     List<FlowNode> queryList(FlowNode record);
+
+    FlowNode queryNodeByUuid(FlowNode record);
 }

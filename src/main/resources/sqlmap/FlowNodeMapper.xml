@@ -160,4 +160,15 @@
     order by id asc
 
   </select>
+
+  <select id="queryNodeByUuid" parameterType="com.formice.mars.web.model.entity.FlowNode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from flow_node
+    where is_deleted = 0
+    and flow_id = #{flowId}
+    and busi_id = #{busiId}
+    and uuid = #{uuid}
+
+  </select>
 </mapper>
