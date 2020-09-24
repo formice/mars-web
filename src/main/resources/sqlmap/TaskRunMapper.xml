@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="task_id" property="taskId" jdbcType="BIGINT" />
     <result column="flow_id" property="flowId" jdbcType="BIGINT" />
+    <result column="node_id" property="nodeId" jdbcType="BIGINT" />
     <result column="tool_id" property="toolId" jdbcType="BIGINT" />
     <result column="busi_type" property="busiType" jdbcType="TINYINT" />
     <result column="busi_id" property="busiId" jdbcType="BIGINT" />
@@ -17,7 +18,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, task_id, flow_id, tool_id, busi_type, busi_id, value, is_remote,create_time, create_by,
+    id, task_id, flow_id,node_id, tool_id, busi_type, busi_id, value, is_remote,create_time, create_by,
     update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
@@ -31,12 +32,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.TaskRun" >
-    insert into task_run (id, task_id, flow_id, 
+    insert into task_run (id, task_id, flow_id, node_id,
       tool_id, busi_type, busi_id, 
       value,is_remote, create_time, create_by,
       update_time, update_by, is_deleted
       )
-    values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{flowId,jdbcType=BIGINT}, #{nodeId,jdbcType=BIGINT},
       #{toolId,jdbcType=BIGINT}, #{busiType,jdbcType=TINYINT}, #{busiId,jdbcType=BIGINT}, 
       #{value,jdbcType=VARCHAR},#{isRemote,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT},
       #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT}
@@ -53,6 +54,9 @@
       </if>
       <if test="flowId != null" >
         flow_id,
+      </if>
+      <if test="nodeId != null" >
+        node_id,
       </if>
       <if test="toolId != null" >
         tool_id,
@@ -95,6 +99,9 @@
       <if test="flowId != null" >
         #{flowId,jdbcType=BIGINT},
       </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=BIGINT},
+      </if>
       <if test="toolId != null" >
         #{toolId,jdbcType=BIGINT},
       </if>
@@ -136,6 +143,9 @@
       <if test="flowId != null" >
         flow_id = #{flowId,jdbcType=BIGINT},
       </if>
+      <if test="nodeId != null" >
+        node_id = #{nodeId,jdbcType=BIGINT},
+      </if>
       <if test="toolId != null" >
         tool_id = #{toolId,jdbcType=BIGINT},
       </if>
@@ -170,6 +180,7 @@
     update task_run
     set task_id = #{taskId,jdbcType=BIGINT},
       flow_id = #{flowId,jdbcType=BIGINT},
+      node_id = #{nodeId,jdbcType=BIGINT},
       tool_id = #{toolId,jdbcType=BIGINT},
       busi_type = #{busiType,jdbcType=TINYINT},
       busi_id = #{busiId,jdbcType=BIGINT},
@@ -193,6 +204,9 @@
     </if>
     <if test="flowId != null">
       and flow_id = #{flowId}
+    </if>
+    <if test="nodeId != null">
+      and node_id = #{nodeId}
     </if>
     <if test="toolId != null">
       and tool_id = #{toolId}

@@ -166,6 +166,7 @@ CREATE TABLE `task_run` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `task_id` bigint(20) NOT NULL COMMENT 'task ID',
   `flow_id` bigint(20) NOT NULL COMMENT '所属工作流ID',
+  `node_id` bigint(20) NOT NULL COMMENT '节点ID',
   `tool_id` bigint(20) NOT NULL COMMENT '工具ID',
   `busi_type` tinyint(4) NOT NULL COMMENT '输入，输出，见：tool_input_and_output_cate。 参数：18',
   `busi_id` bigint(20) NOT NULL COMMENT '业务ID',

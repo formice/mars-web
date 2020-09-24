@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class TaskRunItemDto {
     private Long id;
+    private Long nodeId;
     private Long toolId;
     private Integer type;
     private String value;

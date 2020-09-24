@@ -188,7 +188,7 @@ public class FlowService {
         return result;
     }
 
-    public List<FlowNode> getFlowInput(Long flowId){
+    public List<FlowNode> getFlowInputs(Long flowId){
         List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
         //过滤出import_data 节点，作为输入项
         return nodes.stream().filter(n -> n.getBusiId() == 295).collect(Collectors.toList());

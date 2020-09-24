@@ -42,7 +42,7 @@ public class TaskRun {
         this.busiId = busiId;
     }
 
-    public TaskRun(Long taskId, Long flowId, Long toolId, Integer busiType, Long busiId,String value,Integer isRemote) {
+    public TaskRun(Long taskId, Long flowId,Long nodeId, Long toolId, Integer busiType, Long busiId,String value,Integer isRemote) {
         this.taskId = taskId;
         this.flowId = flowId;
         this.toolId = toolId;
