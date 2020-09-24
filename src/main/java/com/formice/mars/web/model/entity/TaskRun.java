@@ -14,6 +14,8 @@ public class TaskRun {
 
     private Long flowId;
 
+    private Long nodeId;
+
     private Long toolId;
 
     private Integer busiType;
@@ -34,9 +36,10 @@ public class TaskRun {
 
     private Integer isDeleted;
 
-    public TaskRun(Long taskId, Long flowId, Long toolId, Integer busiType, Long busiId) {
+    public TaskRun(Long taskId, Long flowId,Long nodeId, Long toolId, Integer busiType, Long busiId) {
         this.taskId = taskId;
         this.flowId = flowId;
+        this.nodeId = nodeId;
         this.toolId = toolId;
         this.busiType = busiType;
         this.busiId = busiId;

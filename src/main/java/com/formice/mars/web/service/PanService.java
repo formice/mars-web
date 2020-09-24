@@ -217,6 +217,19 @@ public class PanService {
         //ossClient.shutdown();
     }
 
+    public String download(String ossFile,String savePath,String saveFileName){
+        // 下载OSS文件到本地文件。如果指定的本地文件存在会覆盖，不存在则新建。
+        //String fileName = ossFile.split(File.separator)[ossFile.split(File.separator).length-1];
+        //sString localFile = System.getProperty("user.dir") + File.separator+"download" + File.separator + fileName;
+        String localFile = savePath+saveFileName;
+        log.info("开始下载文件["+ossFile+"] --> ["+localFile+"]");
+        ossClient.getObject(new GetObjectRequest(ossProvider.getBucketName(), ossFile), new File(localFile));
+        log.info("下载完成文件");
+        return localFile;
+        // 关闭OSSClient。
+        //ossClient.shutdown();
+    }
+
     public void main(String [] args){
         System.out.println("ddfd");
         SimplifiedObjectMeta fff = new SimplifiedObjectMeta();

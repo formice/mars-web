@@ -19,11 +19,12 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
-//@Service
-//@Log4j2
-public class TaskService {
+@Service
+@Log4j2
+public class TaskService1 {
     @Autowired
     private TaskDao taskDao;
 
@@ -100,6 +101,25 @@ public class TaskService {
         if (!dir.exists()) {
             dir.mkdirs();
         }
+
+        //2.过滤出import_data工具，将oss文件下载到本地运行目录
+        List<FlowNode> edNodes = nodes.stream().filter(n ->
+                Constant.EXPORT_DATA_TOOL.equals(n.getBusiId())).collect(Collectors.toList());
+        edNodes.forEach(n ->{
+            TaskRun t = taskRunDao.queryEntity(
+                    new TaskRun(taskId, flowId,n.getId(), Constant.EXPORT_DATA_TOOL, 16, Constant.EXPORT_DATA_TOOL_INPUT_ITEM_ID));
+            if(t != null) {
+                panService.download(t.getValue(),path,null);
+            }
+        });
+        //3.过滤出其他命令行执行工具，逐个运行
+        List<FlowNode> runNodes = nodes.stream().filter(n -> !Constant.EXPORT_DATA_TOOL.equals(n.getBusiId())).collect(Collectors.toList());
+        runNodes.forEach(n ->{
+            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, Constant.EXPORT_DATA_TOOL, 16, Constant.EXPORT_DATA_TOOL_INPUT_ITEM_ID));
+            if(t != null) {
+                panService.download(t.getValue(),path);
+            }
+        });
 
         //Stream.iterate(0, i -> i + 1).limit(nodes.size()).forEach(i -> {
         for(int i = 0; i < nodes.size(); i++){
@@ -201,6 +221,11 @@ public class TaskService {
        Customer c = customerDao.queryCustomerById(userId);
        //return c.getName()+File.separator+"result"+File.separator+t.getFlowId()+File.separator+taskId+File.separator;
         return c.getName()+File.separator+"task"+File.separator+"T_"+t.getFlowId()+"_"+taskId+File.separator;
+    }
+
+    public String getToolOuputFileName(Long nodeId,Long toolId,Long outputId){
+       String prefix = nodeId+"_"+toolId+"_17_"+outputId;
+       return null;
     }
 
 }
