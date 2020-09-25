@@ -10,4 +10,7 @@ public class Constant {
 
     public static final Long EXPORT_DATA_TOOL = 295L;
     public static final Long EXPORT_DATA_TOOL_INPUT_ITEM_ID = 242L;
+    public static final Long EXPORT_DATA_TOOL_OUTPUT_ITEM_ID = 243L;
+
+    public static final Integer FORMAT_ANYWAY_ID = 40;
 }

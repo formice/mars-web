@@ -222,8 +222,14 @@
     <if test="flowId != null">
       and flow_id = #{flowId}
     </if>
+    <if test="nodeId != null">
+      and node_id = #{nodeId}
+    </if>
     <if test="toolId != null">
       and tool_id = #{toolId}
+    </if>
+    <if test="busiType != null">
+      and busi_type = #{busiType}
     </if>
     <if test="busiId != null">
       and busi_id = #{busiId}

@@ -262,3 +262,4 @@ INSERT INTO `dic` VALUES (null,'37', '公共工作流','', 'flow_cate', null, nu
 INSERT INTO `dic` VALUES (null,'38', '私有工作流','', 'flow_cate', null, null, null, null, 0);
 
 INSERT INTO `dic` VALUES (null,'39', 'html', '','tool_input_and_output_file_format', null, null, null, null, 0);
+INSERT INTO `dic` VALUES (null,'40', '不限', '','tool_input_and_output_file_format', null, null, null, null, 0);

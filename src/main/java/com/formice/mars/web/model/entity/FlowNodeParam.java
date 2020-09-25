@@ -28,11 +28,13 @@ public class FlowNodeParam extends BaseEntity{
 
     private Long relaBusiId;
 
-    public FlowNodeParam(Long flowId, Long toolId, Long busiId) {
+    /*public FlowNodeParam(Long flowId,Long nodeId, Long toolId,Integer busiType, Long busiId) {
         this.flowId = flowId;
+        this.nodeId = nodeId;
         this.toolId = toolId;
+        this.busiType = busiType;
         this.busiId = busiId;
-    }
+    }*/
 
     public FlowNodeParam(Long flowId,Long nodeId, Long toolId, Integer busiType, Long busiId, Long relaNodeId ,Long relaToolId,Integer relaBusiType,Long relaBusiId) {
         this.flowId = flowId;
@@ -44,6 +46,14 @@ public class FlowNodeParam extends BaseEntity{
         this.relaToolId = relaToolId;
         this.relaBusiType = relaBusiType;
         this.relaBusiId = relaBusiId;
+    }
+
+    public FlowNodeParam(Long flowId, Long nodeId, Long toolId,Integer busiType, Long busiId) {
+        this.flowId = flowId;
+        this.nodeId = nodeId;
+        this.toolId = toolId;
+        this.busiType = busiType;
+        this.busiId = busiId;
     }
 
     public FlowNodeParam(Long flowId, Long toolId, Long busiId, String value) {

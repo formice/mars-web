@@ -35,7 +35,7 @@ public class TaskService1 {
     private FlowNodeDao flowNodeDao;
 
     @Autowired
-    private ToolService toolService;
+    private ToolService1 toolService;
 
     @Autowired
     private ToolInputAndOutputDao toolInputAndOutputDao;
@@ -45,6 +45,9 @@ public class TaskService1 {
 
     @Autowired
     private CustomerDao customerDao;
+
+    @Autowired
+    private DicService dicService;
 
    public void create(String json){
         TaskRunDto taskRunDto = JSON.parseObject(json, TaskRunDto.class);
@@ -109,23 +112,24 @@ public class TaskService1 {
             TaskRun t = taskRunDao.queryEntity(
                     new TaskRun(taskId, flowId,n.getId(), Constant.EXPORT_DATA_TOOL, 16, Constant.EXPORT_DATA_TOOL_INPUT_ITEM_ID));
             if(t != null) {
-                panService.download(t.getValue(),path,null);
+                panService.download(t.getValue(),path,
+                        getToolOuputFileName(flowId,n.getId(),Constant.EXPORT_DATA_TOOL,Constant.EXPORT_DATA_TOOL_OUTPUT_ITEM_ID,t.getValue()));
             }
         });
         //3.过滤出其他命令行执行工具，逐个运行
         List<FlowNode> runNodes = nodes.stream().filter(n -> !Constant.EXPORT_DATA_TOOL.equals(n.getBusiId())).collect(Collectors.toList());
-        runNodes.forEach(n ->{
+        /*runNodes.forEach(n ->{
             TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, Constant.EXPORT_DATA_TOOL, 16, Constant.EXPORT_DATA_TOOL_INPUT_ITEM_ID));
             if(t != null) {
                 panService.download(t.getValue(),path);
             }
-        });
+        });*/
 
         //Stream.iterate(0, i -> i + 1).limit(nodes.size()).forEach(i -> {
-        for(int i = 0; i < nodes.size(); i++){
-            FlowNode n = nodes.get(i);
+        for(int i = 0; i < runNodes.size(); i++){
+            FlowNode n = runNodes.get(i);
             //构建工具执行命令
-            String command = toolService.buildRunCommand(flowId, taskId, n.getBusiId(),path);
+            String command = toolService.buildRunCommand(n,path);
             command = command.replaceAll("&nbsp;"," ");
             //构建docker命令
             //"docker run -v  /opt/docker/share:/tmp ncbi-blast:2.10.1 "
@@ -149,8 +153,8 @@ public class TaskService1 {
             ShellUtils.runShell(sb.toString());
             log.info("工具运行完成...");
             //更新task的process
-            //int process = (i+1)*100/nodes.size();
-            int process = (i+1)*100/(nodes.size()+1);
+            //int process = (i+1)*100/runNodes.size();
+            int process = (i+1)*100/(runNodes.size()+1);
             taskDao.updateByPrimaryKeySelective(new Task(taskId,process));
         };
         /*nodes.forEach(n ->{
@@ -168,22 +172,22 @@ public class TaskService1 {
 
 
         //3.执行完后，上传结果文件到oss
-        FlowNode n = nodes.get(nodes.size()-1);
+        FlowNode n = runNodes.get(runNodes.size()-1);
         List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(n.getBusiId(),17));
         Customer c = customerDao.queryCustomerById(userId);
         outputs.forEach(o ->{
-            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, n.getBusiId(), 17, o.getId()));
+            //TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, n.getBusiId(), 17, o.getId()));
             //String ossFolder = c.getName()+File.separator+"result"+File.separator+flowId+File.separator+taskId+File.separator;
             String ossFolder = getTaskResultPath(userId,taskId);
             panService.createFolder(ossFolder);
             String localFolder = getTaskPath(flowId,taskId);
             //String localFolder = "/opt/webapps/upload/";
-            String fileName = t.getValue();
+            String outputFileName = getToolOuputFileName(n.getFlowId(),n.getId(),n.getBusiId(),o.getId(),null);
             //String fileName = "SRR3226034_2.fastq.gz";
             //ShellUtils.runShell("chmod 777 "+localFolder+fileName);
-            log.info("开始上传文件:"+fileName+","+localFolder+"-->"+ossFolder);
-            panService.upload(fileName,localFolder,ossFolder);
-            log.info("结束上传文件:"+fileName+","+localFolder+"-->"+ossFolder);
+            log.info("开始上传文件:"+outputFileName+","+localFolder+"-->"+ossFolder);
+            panService.upload(outputFileName,localFolder,ossFolder);
+            log.info("结束上传文件:"+outputFileName+","+localFolder+"-->"+ossFolder);
         });
 
         int process = 100;
@@ -223,9 +227,20 @@ public class TaskService1 {
         return c.getName()+File.separator+"task"+File.separator+"T_"+t.getFlowId()+"_"+taskId+File.separator;
     }
 
-    public String getToolOuputFileName(Long nodeId,Long toolId,Long outputId){
-       String prefix = nodeId+"_"+toolId+"_17_"+outputId;
-       return null;
+    public String getToolOuputFileName(Long flowId,Long nodeId,Long toolId,Long outputId,String inputFile){
+       String prefix = flowId+"_"+nodeId+"_"+toolId+"_17_"+outputId;
+       String suffix = null;
+        ToolInputAndOutput output = toolInputAndOutputDao.selectByPrimaryKey(outputId);
+        //如果文件格式是“任意”，文件的后缀采用输入文件的后缀
+        if(Constant.FORMAT_ANYWAY_ID.equals(output.getFileFormat())){
+            if(inputFile != null) {
+                suffix = inputFile.split(File.separator)[inputFile.split(File.separator).length - 1];
+            }
+        }else {
+            Dic d = dicService.queryByCode(output.getFileFormat() + "");
+            suffix = d.getName();
+        }
+       return prefix+"."+suffix;
     }
 
 }

@@ -46,6 +46,8 @@ public class ToolService1 {
     private FlowNodeParamDao flowNodeParamDao;
     @Autowired
     private PanService panService;
+    @Autowired
+    private TaskService1 taskService;
 
 
     public Long addTool(Tool tool){
@@ -219,13 +221,13 @@ public class ToolService1 {
     bwa mem -t 3   /data/flow1/input/ref.fa   /data/flow1/input/read_1.fastq.gz   /data/flow1/input/read_2.fastq.gz  | samtools view -Sb  ->   /data/flow1/output/sample.bam
     samtools sort -@ 2 -m 5 -O bam -o /data/flow1/output/sample.sorted.bam  /data/flow1/output/sample.bam -T PREFIX.bam
     */
-    public String buildRunCommand(Long flowId,Long taskId,Long toolId,String path) throws Exception {
+    public String buildRunCommand(FlowNode node,String path) throws Exception {
         String result = null;
         //输入
         Map<String,String> inputMap = new HashMap<String,String>();
-        List<ToolInputAndOutput> inputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,16));
+        List<ToolInputAndOutput> inputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(node.getBusiId(),16));
         inputs.forEach(i -> {
-            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 16, i.getId()));
+            /*TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 16, i.getId()));
             if(t != null) {
                 Dic d = dicService.queryByCode(i.getPrefixSplitSymbol() + "");
 
@@ -236,36 +238,41 @@ public class ToolService1 {
                 //inputMap.put(i.getName(),i.getPrefix() + d.getValue() + file);
                 //去掉前缀
                 inputMap.put(i.getName(),file);
-            }
+            }*/
+            FlowNodeParam nodep = flowNodeParamDao.queryEntity(new FlowNodeParam(node.getFlowId(),node.getId(),node.getBusiId(),16, i.getId()));
+            String inputFileName = taskService.getToolOuputFileName(nodep.getFlowId(),nodep.getRelaNodeId(),nodep.getToolId(),nodep.getRelaBusiId(),null);
+            inputMap.put(i.getName(),path+inputFileName);
         });
         //输出
         Map<String,String> outputMap = new HashMap<String,String>();
-        List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(toolId,17));
+        List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(node.getBusiId(),17));
         outputs.forEach(o -> {
-            TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 17, o.getId()));
+            /*TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 17, o.getId()));
             if(t != null) {
                 Dic d = dicService.queryByCode(o.getPrefixSplitSymbol() + "");
                 //outputMap.put(o.getName(),o.getPrefix() + d.getValue() + t.getValue());
                 //去掉前缀
                 outputMap.put(o.getName(),path+t.getValue());
-            }
+            }*/
+            String outputFileName = taskService.getToolOuputFileName(node.getFlowId(),node.getId(),node.getBusiId(),o.getId(),null);
+            outputMap.put(o.getName(),path+outputFileName);
         });
 
         //参数
         Map<String,String> paramMap = new HashMap<String,String>();
-        List<ToolParameter> parameters = toolParameterDao.queryList(new ToolParameter(toolId));
+        List<ToolParameter> parameters = toolParameterDao.queryList(new ToolParameter(node.getBusiId()));
         parameters.forEach(p -> {
             Dic d = dicService.queryByCode(p.getPrefixSplitSymbol());
             //System.out.println("taskId:" + taskId+",flowId="+flowId+",toolId:"+toolId+",pId:"+p.getId());
             //TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, toolId, 18, p.getId()));
-            FlowNodeParam t = flowNodeParamDao.queryEntity(new FlowNodeParam(flowId,toolId,p.getId()));
+            FlowNodeParam t = flowNodeParamDao.queryEntity(new FlowNodeParam(node.getFlowId(),node.getId(),node.getBusiId(),18,p.getId()));
             //paramMap.put(p.getName(),p.getPrefix()+d.getValue()+t.getValue());
             //去掉前缀
             paramMap.put(p.getName(),t.getValue());
         });
 
 
-        List<ToolTemplate> ts =  toolTemplateDao.queryList(new ToolTemplate(toolId));
+        List<ToolTemplate> ts =  toolTemplateDao.queryList(new ToolTemplate(node.getBusiId()));
         if(!CollectionUtils.isEmpty(ts)) {
             //new一个模板资源加载器
             StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
