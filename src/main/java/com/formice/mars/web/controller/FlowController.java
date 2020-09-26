@@ -5,13 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.formice.mars.web.common.PageResponse;
 import com.formice.mars.web.common.Response;
 import com.formice.mars.web.model.dto.FlowPageDto;
-import com.formice.mars.web.model.entity.FlowNode;
 import com.formice.mars.web.service.FlowService;
 import com.formice.mars.web.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:63342", maxAge = 3600)
 @RestController

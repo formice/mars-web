@@ -48,13 +48,14 @@ public class TaskRun {
     public TaskRun(Long taskId, Long flowId,Long nodeId, Long toolId, Integer busiType, Long busiId,String value,Integer isRemote) {
         this.taskId = taskId;
         this.flowId = flowId;
+        this.nodeId = nodeId;
         this.toolId = toolId;
         this.busiType = busiType;
         this.busiId = busiId;
         this.value = value;
         this.isRemote = isRemote;
     }
-
+/*
     public Long getId() {
         return id;
     }
@@ -149,5 +150,5 @@ public class TaskRun {
 
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
-    }
+    }*/
 }

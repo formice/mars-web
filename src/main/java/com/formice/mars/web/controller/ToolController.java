@@ -74,11 +74,11 @@ public class ToolController {
         return toolService.getBasePageList(toolPageDto);
     }
 
-    @RequestMapping(method = RequestMethod.GET,value = "/buildRunCommand")
+    /*@RequestMapping(method = RequestMethod.GET,value = "/buildRunCommand")
     public String getBuildRunCommand(Long taskId,Long flowId,Long toolId) throws Exception {
         String path = taskService.getTaskPath(flowId,taskId);
         return toolService.buildRunCommand(flowId,taskId,toolId,path);
-    }
+    }*/
 
     @RequestMapping(method = RequestMethod.POST,value = "/list")
     public Response getList(ToolDto toolDto){

@@ -61,16 +61,21 @@ public class FlowService {
         });
 
         flowJsonDto.getParams().forEach(p ->{
-            FlowNodeParam param = new FlowNodeParam(f.getId(),p.getToolId(),p.getId(),p.getValue());
+            //uuid 转 nodeId
+            FlowNode node = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),p.getUuid(),p.getToolId()));
+            FlowNodeParam param = new FlowNodeParam(f.getId(),node.getId(),p.getToolId(),18,p.getId(),p.getValue());
             flowNodeParamDao.insertSelective(param);
         });
         flowJsonDto.getRelas().forEach(r ->{
             //uuid 转 nodeId
-            FlowNode node = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),r.getUuid(),r.getBusiId()));
+            FlowNode node = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),r.getUuid(),r.getToolId()));
             //relaUuid 转 relaNodeId
-            FlowNode relaNode = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),r.getRelaUuid(),r.getRelaBusiId()));
-            FlowNodeParam param = new FlowNodeParam(f.getId(),node.getId(),r.getToolId(),16,r.getBusiId(),relaNode.getId(),r.getRelaToolId(),17,r.getRelaBusiId());
-            flowNodeParamDao.insertSelective(param);
+            FlowNode relaNode = flowNodeDao.queryNodeByUuid(new FlowNode(f.getId(),r.getRelaUuid(),r.getRelaToolId()));
+            if(relaNode != null){
+                FlowNodeParam param = new FlowNodeParam(f.getId(),node.getId(),r.getToolId(),16,r.getBusiId(),relaNode.getId(),r.getRelaToolId(),17,r.getRelaBusiId());
+                flowNodeParamDao.insertSelective(param);
+            }
+
         });
     }
 

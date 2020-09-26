@@ -56,9 +56,11 @@ public class FlowNodeParam extends BaseEntity{
         this.busiId = busiId;
     }
 
-    public FlowNodeParam(Long flowId, Long toolId, Long busiId, String value) {
+    public FlowNodeParam(Long flowId,Long nodeId, Long toolId, Integer busiType,Long busiId, String value) {
         this.flowId = flowId;
+        this.nodeId = nodeId;
         this.toolId = toolId;
+        this.busiType = busiType;
         this.busiId = busiId;
         this.value = value;
     }
