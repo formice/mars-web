@@ -12,7 +12,7 @@ public class FlowNode extends BaseEntity{
 
     private Long flowId;
 
-    private Long busiId;
+    private Long toolId;
 
     private String alias;
 
@@ -20,16 +20,16 @@ public class FlowNode extends BaseEntity{
         this.flowId = flowId;
     }
 
-    public FlowNode(Long flowId,String uuid,Long busiId) {
+    public FlowNode(Long flowId,String uuid,Long toolId) {
         this.uuid = uuid;
         this.flowId = flowId;
-        this.busiId = busiId;
+        this.toolId = toolId;
     }
 
-    public FlowNode(String uuid,Long flowId, Long busiId,String alias) {
+    public FlowNode(String uuid,Long flowId, Long toolId,String alias) {
         this.uuid = uuid;
         this.flowId = flowId;
-        this.busiId = busiId;
+        this.toolId = toolId;
         this.alias = alias;
     }
 }

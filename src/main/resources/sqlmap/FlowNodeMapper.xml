@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="uuid" property="uuid" jdbcType="VARCHAR" />
     <result column="flow_id" property="flowId" jdbcType="BIGINT" />
-    <result column="busi_id" property="busiId" jdbcType="BIGINT" />
+    <result column="tool_id" property="toolId" jdbcType="BIGINT" />
     <result column="alias" property="alias" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="create_by" property="createBy" jdbcType="BIGINT" />
@@ -14,7 +14,7 @@
     <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id,uuid, flow_id, busi_id,alias, create_time, create_by, update_time, update_by, is_deleted
+    id,uuid, flow_id, tool_id,alias, create_time, create_by, update_time, update_by, is_deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -27,10 +27,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.formice.mars.web.model.entity.FlowNode" >
-    insert into flow_node (id,uuid, flow_id, busi_id, alias,
+    insert into flow_node (id,uuid, flow_id, tool_id, alias,
       create_time, create_by, update_time, 
       update_by, is_deleted)
-    values (#{id,jdbcType=BIGINT},#{uuid,jdbcType=VARCHAR}, #{flowId,jdbcType=BIGINT}, #{busiId,jdbcType=BIGINT}, #{alias,jdbcType=VARCHAR},
+    values (#{id,jdbcType=BIGINT},#{uuid,jdbcType=VARCHAR}, #{flowId,jdbcType=BIGINT}, #{toolId,jdbcType=BIGINT}, #{alias,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT})
   </insert>
@@ -46,8 +46,8 @@
       <if test="flowId != null" >
         flow_id,
       </if>
-      <if test="busiId != null" >
-        busi_id,
+      <if test="toolId != null" >
+        tool_id,
       </if>
       <if test="alias != null" >
         alias,
@@ -78,8 +78,8 @@
       <if test="flowId != null" >
         #{flowId,jdbcType=BIGINT},
       </if>
-      <if test="busiId != null" >
-        #{busiId,jdbcType=BIGINT},
+      <if test="toolId != null" >
+        #{toolId,jdbcType=BIGINT},
       </if>
       <if test="alias != null" >
         #{alias,jdbcType=VARCHAR},
@@ -110,8 +110,8 @@
       <if test="flowId != null" >
         flow_id = #{flowId,jdbcType=BIGINT},
       </if>
-      <if test="busiId != null" >
-        busi_id = #{busiId,jdbcType=BIGINT},
+      <if test="toolId != null" >
+        tool_id = #{toolId,jdbcType=BIGINT},
       </if>
       <if test="alias != null" >
         alias = #{alias,jdbcType=VARCHAR},
@@ -139,7 +139,7 @@
     set
       uuid = #{uuid,jdbcType=VARCHAR},
       flow_id = #{flowId,jdbcType=BIGINT},
-      busi_id = #{busiId,jdbcType=BIGINT},
+      tool_id = #{toolId,jdbcType=BIGINT},
       alias = #{alias,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       create_by = #{createBy,jdbcType=BIGINT},
@@ -167,7 +167,7 @@
     from flow_node
     where is_deleted = 0
     and flow_id = #{flowId}
-    and busi_id = #{busiId}
+    and tool_id = #{toolId}
     and uuid = #{uuid}
 
   </select>

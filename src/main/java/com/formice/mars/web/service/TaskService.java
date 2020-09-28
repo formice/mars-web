@@ -108,7 +108,7 @@ public class TaskService {
 
         //2.过滤出import_data工具，将oss文件下载到本地运行目录
         List<FlowNode> edNodes = nodes.stream().filter(n ->
-                Constant.EXPORT_DATA_TOOL.equals(n.getBusiId())).collect(Collectors.toList());
+                Constant.EXPORT_DATA_TOOL.equals(n.getToolId())).collect(Collectors.toList());
         edNodes.forEach(n ->{
             TaskRun t = taskRunDao.queryEntity(
                     new TaskRun(taskId, flowId,n.getId(), Constant.EXPORT_DATA_TOOL, 16, Constant.EXPORT_DATA_TOOL_INPUT_ITEM_ID));
@@ -118,7 +118,7 @@ public class TaskService {
             }
         });
         //3.过滤出其他命令行执行工具，逐个运行
-        List<FlowNode> runNodes = nodes.stream().filter(n -> !Constant.EXPORT_DATA_TOOL.equals(n.getBusiId())).collect(Collectors.toList());
+        List<FlowNode> runNodes = nodes.stream().filter(n -> !Constant.EXPORT_DATA_TOOL.equals(n.getToolId())).collect(Collectors.toList());
         /*runNodes.forEach(n ->{
             TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, Constant.EXPORT_DATA_TOOL, 16, Constant.EXPORT_DATA_TOOL_INPUT_ITEM_ID));
             if(t != null) {
@@ -134,7 +134,7 @@ public class TaskService {
             command = command.replaceAll("&nbsp;"," ");
             //构建docker命令
             //"docker run -v  /opt/docker/share:/tmp ncbi-blast:2.10.1 "
-            Tool t = toolService.getTool(n.getBusiId());
+            Tool t = toolService.getTool(n.getToolId());
             StringBuffer sb = new StringBuffer();
             sb.append(" docker run -v ");
             sb.append(path);
@@ -174,7 +174,7 @@ public class TaskService {
 
         //3.执行完后，上传结果文件到oss
         FlowNode n = runNodes.get(runNodes.size()-1);
-        List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(n.getBusiId(),17));
+        List<ToolInputAndOutput> outputs = toolInputAndOutputDao.queryList(new ToolInputAndOutput(n.getToolId(),17));
         Customer c = customerDao.queryCustomerById(userId);
         outputs.forEach(o ->{
             //TaskRun t = taskRunDao.queryEntity(new TaskRun(taskId, flowId, n.getBusiId(), 17, o.getId()));
@@ -183,7 +183,7 @@ public class TaskService {
             panService.createFolder(ossFolder);
             String localFolder = getTaskPath(flowId,taskId);
             //String localFolder = "/opt/webapps/upload/";
-            String outputFileName = getToolOuputFileName(n.getFlowId(),taskId,n.getId(),n.getBusiId(),o.getId());
+            String outputFileName = getToolOuputFileName(n.getFlowId(),taskId,n.getId(),n.getToolId(),o.getId());
             //String fileName = "SRR3226034_2.fastq.gz";
             //ShellUtils.runShell("chmod 777 "+localFolder+fileName);
             log.info("开始上传文件:"+outputFileName+","+localFolder+"-->"+ossFolder);
@@ -245,7 +245,7 @@ public class TaskService {
                 suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             }*/
         }else {
-            Dic d = dicService.queryByCode(output.getFileFormat() + "");
+            Dic d = dicService.queryByCode(output.getFileFormat());
             suffix = d.getValue();
         }
 

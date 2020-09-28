@@ -9,7 +9,7 @@
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="min_num" jdbcType="TINYINT" property="minNum" />
     <result column="max_num" jdbcType="TINYINT" property="maxNum" />
-    <result column="file_format" jdbcType="TINYINT" property="fileFormat" />
+    <result column="file_format" jdbcType="VARCHAR" property="fileFormat" />
     <result column="file_split_symbol" jdbcType="TINYINT" property="fileSplitSymbol" />
     <result column="desc" jdbcType="VARCHAR" property="desc" />
     <result column="prefix" jdbcType="VARCHAR" property="prefix" />
@@ -46,7 +46,7 @@
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{toolId,jdbcType=BIGINT}, 
       #{cate,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{minNum,jdbcType=TINYINT}, 
-      #{maxNum,jdbcType=TINYINT}, #{fileFormat,jdbcType=TINYINT}, #{fileSplitSymbol,jdbcType=TINYINT}, 
+      #{maxNum,jdbcType=TINYINT}, #{fileFormat,jdbcType=VARCHAR}, #{fileSplitSymbol,jdbcType=TINYINT},
       #{desc,jdbcType=VARCHAR}, #{prefix,jdbcType=VARCHAR}, #{prefixSplitSymbol,jdbcType=TINYINT}, 
       #{isMust,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT}
@@ -133,7 +133,7 @@
         #{maxNum,jdbcType=TINYINT},
       </if>
       <if test="fileFormat != null">
-        #{fileFormat,jdbcType=TINYINT},
+        #{fileFormat,jdbcType=VARCHAR},
       </if>
       <if test="fileSplitSymbol != null">
         #{fileSplitSymbol,jdbcType=TINYINT},
@@ -189,7 +189,7 @@
         max_num = #{maxNum,jdbcType=TINYINT},
       </if>
       <if test="fileFormat != null">
-        file_format = #{fileFormat,jdbcType=TINYINT},
+        file_format = #{fileFormat,jdbcType=VARCHAR},
       </if>
       <if test="fileSplitSymbol != null">
         file_split_symbol = #{fileSplitSymbol,jdbcType=TINYINT},
@@ -232,7 +232,7 @@
       type = #{type,jdbcType=TINYINT},
       min_num = #{minNum,jdbcType=TINYINT},
       max_num = #{maxNum,jdbcType=TINYINT},
-      file_format = #{fileFormat,jdbcType=TINYINT},
+      file_format = #{fileFormat,jdbcType=VARCHAR},
       file_split_symbol = #{fileSplitSymbol,jdbcType=TINYINT},
       desc = #{desc,jdbcType=VARCHAR},
       prefix = #{prefix,jdbcType=VARCHAR},

@@ -90,7 +90,7 @@ public class FlowService {
                     String.valueOf(d.getUserId()),
                     d.getName(),
                     d.getDesc(),
-                    dicService.queryById(new Long(d.getCate())).getName(),
+                    dicService.queryById(new Long(d.getCate())).getValue(),
                     DateUtil.dateToString(d.getCreateTime(),DateUtil.DATE_FORMAT_SECOND)
                     ));
         });
@@ -106,7 +106,7 @@ public class FlowService {
             List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
             inputTool = nodes.get(nodes.size()-1);
         }
-        Tool t = toolDao.selectByPrimaryKey(inputTool.getBusiId());
+        Tool t = toolDao.selectByPrimaryKey(inputTool.getToolId());
 
         System.out.println(t.getId());
 
@@ -130,7 +130,7 @@ public class FlowService {
         Map<Long,List<ToolParameter>> result = new HashMap<>();
         List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
         nodes.forEach(n -> {
-            result.put(n.getBusiId(),toolParameterDao.queryList(new ToolParameter(n.getBusiId())));
+            result.put(n.getToolId(),toolParameterDao.queryList(new ToolParameter(n.getToolId())));
         });
         return result;
     }
@@ -177,7 +177,7 @@ public class FlowService {
         List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
         nodes.forEach(n -> {
             //result.put(n.getBusiId(),toolParameterDao.queryList(new ToolParameter(n.getBusiId())));
-            Long toolId = n.getBusiId();
+            Long toolId = n.getToolId();
             Tool t = toolDao.selectByPrimaryKey(toolId);
             String toolName = t.getName();
             Map<String,Object> map = Maps.newLinkedHashMap();
@@ -196,7 +196,7 @@ public class FlowService {
     public List<FlowNode> getFlowInputs(Long flowId){
         List<FlowNode> nodes = flowNodeDao.queryList(new FlowNode(flowId));
         //过滤出import_data 节点，作为输入项
-        return nodes.stream().filter(n -> n.getBusiId() == 295).collect(Collectors.toList());
+        return nodes.stream().filter(n -> Constant.EXPORT_DATA_TOOL.equals(n.getToolId())).collect(Collectors.toList());
     }
 
 

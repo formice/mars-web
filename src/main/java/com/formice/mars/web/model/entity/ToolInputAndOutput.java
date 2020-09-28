@@ -20,7 +20,7 @@ public class ToolInputAndOutput extends BaseEntity{
 
     private Integer maxNum;
 
-    private Integer fileFormat;
+    private String fileFormat;
 
     private Integer fileSplitSymbol;
 
