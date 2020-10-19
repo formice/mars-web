@@ -198,6 +198,19 @@ CREATE TABLE `dic` (
   UNIQUE KEY `UN_CODE` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+CREATE TABLE `portal_contact_us` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(1000) NOT NULL COMMENT '名字',
+  `mobile` varchar(1000) NOT NULL COMMENT '手机号码',
+  `content` varchar(1000) NOT NULL COMMENT '内容',
+  `create_time` timestamp  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_by` bigint(20) DEFAULT NULL,
+  `update_time` timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `update_by` bigint(20) DEFAULT NULL,
+  `is_deleted` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8  COMMENT '官网-联系我们';
+
 
 
 
