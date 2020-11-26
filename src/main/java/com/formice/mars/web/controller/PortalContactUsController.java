@@ -21,7 +21,8 @@ public class PortalContactUsController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/contactus")
     public Response addContactUs(PortalContactUs entity){
-        return Response.createBySuccess(portalContactUsService.addContactUs(entity));
+        portalContactUsService.addContactUs(entity);
+        return Response.createBySuccess();
     }
 
 
