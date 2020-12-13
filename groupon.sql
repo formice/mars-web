@@ -279,3 +279,5 @@ INSERT INTO `dic` VALUES (null,'40', '不限', '','tool_input_and_output_file_fo
 INSERT INTO `dic` VALUES (null,'41', 'blast', '','tool_input_and_output_file_format', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'42', '无后缀', '','tool_input_and_output_file_format', null, null, null, null, 0);
 INSERT INTO `dic` VALUES (null,'43', 'txt', '','tool_input_and_output_file_format', null, null, null, null, 0);
+
+INSERT INTO `dic` VALUES (null,'44', 'map工具','', 'tool_type', null, null, null, null, 0);
